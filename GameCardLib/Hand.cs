@@ -13,8 +13,9 @@ namespace GameCardLib
         private List<Card> cards;
         private int score;
 
-        public Hand()
+        public Hand(int seatNbr)
         {
+            this.seatNbr = seatNbr;
             this.cards = new List<Card>();
             this.score = 0;
         }

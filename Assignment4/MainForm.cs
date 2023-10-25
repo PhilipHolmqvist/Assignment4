@@ -23,7 +23,7 @@ namespace Assignment4
         //Returns which player is playing. If noone is playing it returns -1.
         private int whoIsPlaying()
         {
-            if(player1RadioButton.Checked)
+            if (player1RadioButton.Checked)
             {
                 return 1;
             }
@@ -46,17 +46,35 @@ namespace Assignment4
             return -1;
         }
 
+
+        private void seatButtonClick(int buttonNbr)
+        {
+            int playerId = whoIsPlaying();
+
+            switch (buttonNbr)
+            {
+                case 1:
+                    
+
+                    if (dealer.playerWantsSeat(playerId, 1))
+                    {
+
+                        seatButton1.Enabled = false;
+                        seatButton1.Text = "Player: " + playerId;
+                    }
+                    else
+                    {
+                        MessageBox.Show("That seat is already taken!", "Error",
+                        MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
+                    break;
+            }
+        }
+
         private void seatButton1_Click(object sender, EventArgs e)
         {
-            if(dealer.playerWantsSeat(whoIsPlaying(), 1))
-            {
-                seatButton1.Enabled = false;
-            }
-            else
-            {
-                MessageBox.Show("That seat is already taken!", "Error",
-                MessageBoxButtons.OK, MessageBoxIcon.Information);
-            }
+            seatButtonClick(1);
+           
         }
 
         private void seatButton2_Click(object sender, EventArgs e)
@@ -137,5 +155,9 @@ namespace Assignment4
             }
         }
 
+        private void MainForm_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 }

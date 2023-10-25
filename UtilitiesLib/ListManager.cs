@@ -1,15 +1,17 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 
 namespace UtilitiesLib
 {
 
-    public class ListManager<T> : IListManager<T>
+    public class ListManager<T> : IListManager<T>, IEnumerable<T> where T : class
     {
 
         private List<T> m_List;
@@ -103,10 +105,14 @@ namespace UtilitiesLib
         //Retrives the object at the given index.
         public T GetAt(int anIndex)
         {
-             T aType = m_List[anIndex]; 
-             return aType;
-               
-            }
+             T aType = m_List[anIndex];
+            return aType;
+        }
+
+        public IEnumerator<T> GetEnumerator()
+        {
+            return m_List.GetEnumerator();
+        }
 
         //Returns a List<string> of all the objects.
         public List<string> ToStringList()

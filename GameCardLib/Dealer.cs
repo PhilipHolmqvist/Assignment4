@@ -23,12 +23,28 @@ namespace GameCardLib
 
         private void instansiatePlayers()
         {
-            players.Add(new Player())
+            players.Add(new Player(1));
+            players.Add(new Player(2));
+            players.Add(new Player(3));
+            players.Add(new Player(4));
         }
 
         public ListManager<Player> GetPlayers()
         {
             return players;
+        }
+
+        private Player getPlayer(int playerNbr)
+        {
+            foreach (Player p in players)
+            {
+                if(playerNbr == p.getPlayerId())
+                {
+                    return p;
+                }
+            }
+
+            return null;
         }
 
         private List<Hand> getAllPlayersHands()
@@ -47,22 +63,22 @@ namespace GameCardLib
             return hands;
         }
 
+        //Assigns a player to a seat if its empty.
         public Boolean playerWantsSeat(int playerNbr, int seatNbr)
         {
-            Boolean result = false;
-
+        
             List<Hand> playerHands = getAllPlayersHands();
             foreach(Hand hand in playerHands)
             {
                 if(hand.getSeatNbr() == seatNbr)
                 {
-                    return result = false;
+                    return false;
                 }
             }
-            
 
-            
-            return result;
+            Player p = getPlayer(playerNbr);
+            p.addHand(seatNbr);
+            return true;
         }
 
         
