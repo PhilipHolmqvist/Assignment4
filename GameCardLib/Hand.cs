@@ -20,13 +20,18 @@ namespace GameCardLib
             this.score = 0;
         }
 
+        public List<Card> getCards()
+        {
+            return cards;
+        }
+
         public int getCurrentHandValue()
         {
             int result = 0;
 
             foreach(Card card in cards)
             {
-                result += card.getValue();
+                result += card.getCardIntValue();
             }
 
             return result;
@@ -61,5 +66,9 @@ namespace GameCardLib
             return true;
         }
 
+        public int getScore()
+        {
+            return score;
+        }
     }
 }

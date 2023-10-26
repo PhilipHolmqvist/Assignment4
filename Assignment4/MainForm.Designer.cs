@@ -29,7 +29,6 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
-            pictureBox1 = new PictureBox();
             seatButton1 = new RoundButton();
             seatButton2 = new RoundButton();
             seatButton3 = new RoundButton();
@@ -50,27 +49,15 @@
             groupBox1 = new GroupBox();
             groupBox2 = new GroupBox();
             nextRoundButton = new Button();
-            pictureBox2 = new PictureBox();
-            ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
+            pictureBox1 = new PictureBox();
             groupBox1.SuspendLayout();
             groupBox2.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)pictureBox2).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             SuspendLayout();
-            // 
-            // pictureBox1
-            // 
-            pictureBox1.Image = (Image)resources.GetObject("pictureBox1.Image");
-            pictureBox1.Location = new Point(25, 165);
-            pictureBox1.Margin = new Padding(3, 4, 3, 4);
-            pictureBox1.Name = "pictureBox1";
-            pictureBox1.Size = new Size(1019, 735);
-            pictureBox1.SizeMode = PictureBoxSizeMode.StretchImage;
-            pictureBox1.TabIndex = 0;
-            pictureBox1.TabStop = false;
             // 
             // seatButton1
             // 
-            seatButton1.Location = new Point(71, 669);
+            seatButton1.Location = new Point(71, 657);
             seatButton1.Margin = new Padding(3, 4, 3, 4);
             seatButton1.Name = "seatButton1";
             seatButton1.Size = new Size(57, 67);
@@ -81,7 +68,7 @@
             // 
             // seatButton2
             // 
-            seatButton2.Location = new Point(210, 713);
+            seatButton2.Location = new Point(207, 695);
             seatButton2.Margin = new Padding(3, 4, 3, 4);
             seatButton2.Name = "seatButton2";
             seatButton2.Size = new Size(58, 68);
@@ -92,7 +79,7 @@
             // 
             // seatButton3
             // 
-            seatButton3.Location = new Point(358, 744);
+            seatButton3.Location = new Point(350, 725);
             seatButton3.Margin = new Padding(3, 4, 3, 4);
             seatButton3.Name = "seatButton3";
             seatButton3.Size = new Size(58, 68);
@@ -103,7 +90,7 @@
             // 
             // seatButton4
             // 
-            seatButton4.Location = new Point(505, 756);
+            seatButton4.Location = new Point(498, 735);
             seatButton4.Margin = new Padding(3, 4, 3, 4);
             seatButton4.Name = "seatButton4";
             seatButton4.Size = new Size(58, 68);
@@ -114,7 +101,7 @@
             // 
             // seatButton5
             // 
-            seatButton5.Location = new Point(654, 744);
+            seatButton5.Location = new Point(635, 725);
             seatButton5.Margin = new Padding(3, 4, 3, 4);
             seatButton5.Name = "seatButton5";
             seatButton5.Size = new Size(58, 68);
@@ -125,7 +112,7 @@
             // 
             // seatButton6
             // 
-            seatButton6.Location = new Point(798, 725);
+            seatButton6.Location = new Point(774, 695);
             seatButton6.Margin = new Padding(3, 4, 3, 4);
             seatButton6.Name = "seatButton6";
             seatButton6.Size = new Size(58, 68);
@@ -136,7 +123,7 @@
             // 
             // seatButton7
             // 
-            seatButton7.Location = new Point(941, 669);
+            seatButton7.Location = new Point(901, 656);
             seatButton7.Margin = new Padding(3, 4, 3, 4);
             seatButton7.Name = "seatButton7";
             seatButton7.Size = new Size(58, 68);
@@ -297,22 +284,20 @@
             nextRoundButton.UseVisualStyleBackColor = true;
             nextRoundButton.Click += nextRoundButton_Click;
             // 
-            // pictureBox2
+            // pictureBox1
             // 
-            pictureBox2.Image = (Image)resources.GetObject("pictureBox2.Image");
-            pictureBox2.Location = new Point(358, 628);
-            pictureBox2.Name = "pictureBox2";
-            pictureBox2.Size = new Size(83, 108);
-            pictureBox2.SizeMode = PictureBoxSizeMode.StretchImage;
-            pictureBox2.TabIndex = 20;
-            pictureBox2.TabStop = false;
+            pictureBox1.Image = (Image)resources.GetObject("pictureBox1.Image");
+            pictureBox1.Location = new Point(25, 165);
+            pictureBox1.Name = "pictureBox1";
+            pictureBox1.Size = new Size(1000, 700);
+            pictureBox1.TabIndex = 20;
+            pictureBox1.TabStop = false;
             // 
             // MainForm
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1501, 933);
-            Controls.Add(pictureBox2);
             Controls.Add(groupBox2);
             Controls.Add(groupBox1);
             Controls.Add(label3);
@@ -331,18 +316,15 @@
             Name = "MainForm";
             Text = "Assignment 4 Blackjack by Philip Holmqvist";
             Load += MainForm_Load;
-            ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
             groupBox1.ResumeLayout(false);
             groupBox1.PerformLayout();
             groupBox2.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)pictureBox2).EndInit();
+            ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
 
         #endregion
-
-        private PictureBox pictureBox1;
         private RoundButton seatButton1;
         private RoundButton seatButton2;
         private RoundButton seatButton3;
@@ -363,6 +345,6 @@
         private GroupBox groupBox1;
         private GroupBox groupBox2;
         private Button nextRoundButton;
-        private PictureBox pictureBox2;
+        private PictureBox pictureBox1;
     }
 }

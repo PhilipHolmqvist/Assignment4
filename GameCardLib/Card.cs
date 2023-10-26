@@ -18,7 +18,17 @@ namespace GameCardLib
             this.value = value;
         }
 
-        public int getValue()
+        public Suits getSuits()
+        {
+            return suit;
+        }
+
+        public Values getValue()
+        {
+            return value;
+        }
+
+        public int getCardIntValue()
         {
             int result = 0;
 

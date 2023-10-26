@@ -13,7 +13,7 @@ namespace GameCardLib
         {
             clubs,
             diamonds,
-            heart,
+            hearts,
             spades
         }
 

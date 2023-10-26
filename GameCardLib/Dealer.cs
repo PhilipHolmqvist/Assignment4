@@ -25,6 +25,10 @@ namespace GameCardLib
         private void instansiatePlayers()
         {
             players.Add(new Player(0)); //<-- This player is the dealer. 
+            Player dealer = new Player(0);
+            dealer.addHand(0);
+            players.Add(dealer);
+
             players.Add(new Player(1));
             players.Add(new Player(2));
             players.Add(new Player(3));
@@ -92,21 +96,42 @@ namespace GameCardLib
             throw new NotImplementedException();
         }
 
-        public List<Card> startNewRound()
+        private void clearAllHands() //This includes the dealer hand.
         {
-            //A list of cards that should be on the table that is returned to the mainform.
-            List<Card> playerCards = new List<Card>();
 
+            List<Hand> hands = getAllPlayersHands();
+            foreach (Hand hand in hands)
+            {
+                hand.clearHand();
+            }
+        }
+
+        public List<Hand> startNewRound()
+        {
+            clearAllHands();
+            clearScores();
+            return giveEachHandTwoCards();
+        }
+
+        private void clearScores()
+        {
+
+        }
+
+        private List<Hand> giveEachHandTwoCards()
+        {
             //Give all players and the dealer one card each. 
             List<Hand> hands = getAllPlayersHands();
-            for(int i = hands.Count - 1; i >= 0; i--) //We are iterating from right to left.
+            for(int i = 0; i < 2; i++) //Do the inside loop twice.
             {
-                Card card = gameDeck.drawCard();
-                hands[i].addCard(card);
-                playerCards.Add(card);
+                for (int j = hands.Count - 1; j >= 0; j--) //We are iterating from right to left.
+                {
+                    Card card = gameDeck.drawCard();
+                    hands[i].addCard(card);
+                }
             }
 
-            return playerCards;
+            return hands;
         }
     }
 }

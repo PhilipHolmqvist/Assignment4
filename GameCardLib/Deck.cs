@@ -55,19 +55,19 @@ namespace GameCardLib
             cardManager.Add(new Card(Enums.Suits.spades, Enums.Values.king));
 
             //Heart cards
-            cardManager.Add(new Card(Enums.Suits.heart, Enums.Values.ace));
-            cardManager.Add(new Card(Enums.Suits.heart, Enums.Values.two));
-            cardManager.Add(new Card(Enums.Suits.heart, Enums.Values.three));
-            cardManager.Add(new Card(Enums.Suits.heart, Enums.Values.four));
-            cardManager.Add(new Card(Enums.Suits.heart, Enums.Values.five));
-            cardManager.Add(new Card(Enums.Suits.heart, Enums.Values.six));
-            cardManager.Add(new Card(Enums.Suits.heart, Enums.Values.seven));
-            cardManager.Add(new Card(Enums.Suits.heart, Enums.Values.eight));
-            cardManager.Add(new Card(Enums.Suits.heart, Enums.Values.nine));
-            cardManager.Add(new Card(Enums.Suits.heart, Enums.Values.ten));
-            cardManager.Add(new Card(Enums.Suits.heart, Enums.Values.jack));
-            cardManager.Add(new Card(Enums.Suits.heart, Enums.Values.queen));
-            cardManager.Add(new Card(Enums.Suits.heart, Enums.Values.king));
+            cardManager.Add(new Card(Enums.Suits.hearts, Enums.Values.ace));
+            cardManager.Add(new Card(Enums.Suits.hearts, Enums.Values.two));
+            cardManager.Add(new Card(Enums.Suits.hearts, Enums.Values.three));
+            cardManager.Add(new Card(Enums.Suits.hearts, Enums.Values.four));
+            cardManager.Add(new Card(Enums.Suits.hearts, Enums.Values.five));
+            cardManager.Add(new Card(Enums.Suits.hearts, Enums.Values.six));
+            cardManager.Add(new Card(Enums.Suits.hearts, Enums.Values.seven));
+            cardManager.Add(new Card(Enums.Suits.hearts, Enums.Values.eight));
+            cardManager.Add(new Card(Enums.Suits.hearts, Enums.Values.nine));
+            cardManager.Add(new Card(Enums.Suits.hearts, Enums.Values.ten));
+            cardManager.Add(new Card(Enums.Suits.hearts, Enums.Values.jack));
+            cardManager.Add(new Card(Enums.Suits.hearts, Enums.Values.queen));
+            cardManager.Add(new Card(Enums.Suits.hearts, Enums.Values.king));
 
             //Diamonds cards
             cardManager.Add(new Card(Enums.Suits.diamonds, Enums.Values.ace));
