@@ -49,10 +49,12 @@
             player4RadioButton = new RadioButton();
             groupBox1 = new GroupBox();
             groupBox2 = new GroupBox();
-            button1 = new Button();
+            nextRoundButton = new Button();
+            pictureBox2 = new PictureBox();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             groupBox1.SuspendLayout();
             groupBox2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBox2).BeginInit();
             SuspendLayout();
             // 
             // pictureBox1
@@ -73,7 +75,7 @@
             seatButton1.Name = "seatButton1";
             seatButton1.Size = new Size(57, 67);
             seatButton1.TabIndex = 1;
-            seatButton1.Text = "roundButton1";
+            seatButton1.Text = "1";
             seatButton1.UseVisualStyleBackColor = true;
             seatButton1.Click += seatButton1_Click;
             // 
@@ -84,7 +86,7 @@
             seatButton2.Name = "seatButton2";
             seatButton2.Size = new Size(58, 68);
             seatButton2.TabIndex = 2;
-            seatButton2.Text = "roundButton2";
+            seatButton2.Text = "2";
             seatButton2.UseVisualStyleBackColor = true;
             seatButton2.Click += seatButton2_Click;
             // 
@@ -95,7 +97,7 @@
             seatButton3.Name = "seatButton3";
             seatButton3.Size = new Size(58, 68);
             seatButton3.TabIndex = 3;
-            seatButton3.Text = "roundButton3";
+            seatButton3.Text = "3";
             seatButton3.UseVisualStyleBackColor = true;
             seatButton3.Click += seatButton3_Click;
             // 
@@ -106,7 +108,7 @@
             seatButton4.Name = "seatButton4";
             seatButton4.Size = new Size(58, 68);
             seatButton4.TabIndex = 4;
-            seatButton4.Text = "roundButton4";
+            seatButton4.Text = "4";
             seatButton4.UseVisualStyleBackColor = true;
             seatButton4.Click += seatButton4_Click;
             // 
@@ -117,7 +119,7 @@
             seatButton5.Name = "seatButton5";
             seatButton5.Size = new Size(58, 68);
             seatButton5.TabIndex = 5;
-            seatButton5.Text = "roundButton5";
+            seatButton5.Text = "5";
             seatButton5.UseVisualStyleBackColor = true;
             seatButton5.Click += seatButton5_Click;
             // 
@@ -128,7 +130,7 @@
             seatButton6.Name = "seatButton6";
             seatButton6.Size = new Size(58, 68);
             seatButton6.TabIndex = 6;
-            seatButton6.Text = "roundButton6";
+            seatButton6.Text = "6";
             seatButton6.UseVisualStyleBackColor = true;
             seatButton6.Click += seatButton6_Click;
             // 
@@ -139,7 +141,7 @@
             seatButton7.Name = "seatButton7";
             seatButton7.Size = new Size(58, 68);
             seatButton7.TabIndex = 7;
-            seatButton7.Text = "roundButton7";
+            seatButton7.Text = "7";
             seatButton7.UseVisualStyleBackColor = true;
             seatButton7.Click += seatButton7_Click;
             // 
@@ -193,6 +195,7 @@
             playerHitButton.TabIndex = 12;
             playerHitButton.Text = "Hit";
             playerHitButton.UseVisualStyleBackColor = true;
+            playerHitButton.Click += playerHitButton_Click;
             // 
             // playerStandButton
             // 
@@ -203,6 +206,7 @@
             playerStandButton.TabIndex = 13;
             playerStandButton.Text = "Stand";
             playerStandButton.UseVisualStyleBackColor = true;
+            playerStandButton.Click += playerStandButton_Click;
             // 
             // player1RadioButton
             // 
@@ -269,7 +273,7 @@
             // 
             // groupBox2
             // 
-            groupBox2.Controls.Add(button1);
+            groupBox2.Controls.Add(nextRoundButton);
             groupBox2.Controls.Add(addNewPlayerButton);
             groupBox2.Controls.Add(playerHitButton);
             groupBox2.Controls.Add(playerStandButton);
@@ -282,21 +286,33 @@
             groupBox2.TabStop = false;
             groupBox2.Text = "Player Actions";
             // 
-            // button1
+            // nextRoundButton
             // 
-            button1.Location = new Point(43, 268);
-            button1.Margin = new Padding(3, 4, 3, 4);
-            button1.Name = "button1";
-            button1.Size = new Size(137, 51);
-            button1.TabIndex = 14;
-            button1.Text = "Next Round";
-            button1.UseVisualStyleBackColor = true;
+            nextRoundButton.Location = new Point(43, 268);
+            nextRoundButton.Margin = new Padding(3, 4, 3, 4);
+            nextRoundButton.Name = "nextRoundButton";
+            nextRoundButton.Size = new Size(137, 51);
+            nextRoundButton.TabIndex = 14;
+            nextRoundButton.Text = "Next Round";
+            nextRoundButton.UseVisualStyleBackColor = true;
+            nextRoundButton.Click += nextRoundButton_Click;
+            // 
+            // pictureBox2
+            // 
+            pictureBox2.Image = (Image)resources.GetObject("pictureBox2.Image");
+            pictureBox2.Location = new Point(358, 628);
+            pictureBox2.Name = "pictureBox2";
+            pictureBox2.Size = new Size(83, 108);
+            pictureBox2.SizeMode = PictureBoxSizeMode.StretchImage;
+            pictureBox2.TabIndex = 20;
+            pictureBox2.TabStop = false;
             // 
             // MainForm
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1501, 933);
+            Controls.Add(pictureBox2);
             Controls.Add(groupBox2);
             Controls.Add(groupBox1);
             Controls.Add(label3);
@@ -319,6 +335,7 @@
             groupBox1.ResumeLayout(false);
             groupBox1.PerformLayout();
             groupBox2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)pictureBox2).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -345,6 +362,7 @@
         private RadioButton player4RadioButton;
         private GroupBox groupBox1;
         private GroupBox groupBox2;
-        private Button button1;
+        private Button nextRoundButton;
+        private PictureBox pictureBox2;
     }
 }

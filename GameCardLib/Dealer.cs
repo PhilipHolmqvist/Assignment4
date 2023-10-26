@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Runtime.ConstrainedExecution;
 using System.Text;
@@ -23,6 +24,7 @@ namespace GameCardLib
 
         private void instansiatePlayers()
         {
+            players.Add(new Player(0)); //<-- This player is the dealer. 
             players.Add(new Player(1));
             players.Add(new Player(2));
             players.Add(new Player(3));
@@ -76,11 +78,35 @@ namespace GameCardLib
                 }
             }
 
-            Player p = getPlayer(playerNbr);
-            p.addHand(seatNbr);
+            getPlayer(playerNbr).addHand(seatNbr);
             return true;
         }
 
-        
+        public void playerHit(int seatNbr)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void playerStand(int seatNbr)
+        {
+            throw new NotImplementedException();
+        }
+
+        public List<Card> startNewRound()
+        {
+            //A list of cards that should be on the table that is returned to the mainform.
+            List<Card> playerCards = new List<Card>();
+
+            //Give all players and the dealer one card each. 
+            List<Hand> hands = getAllPlayersHands();
+            for(int i = hands.Count - 1; i >= 0; i--) //We are iterating from right to left.
+            {
+                Card card = gameDeck.drawCard();
+                hands[i].addCard(card);
+                playerCards.Add(card);
+            }
+
+            return playerCards;
+        }
     }
 }

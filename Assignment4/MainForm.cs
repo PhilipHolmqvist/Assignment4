@@ -47,117 +47,94 @@ namespace Assignment4
         }
 
 
-        private void seatButtonClick(int buttonNbr)
+        //A player wants a seat. Check with dealer for availabilty. 
+        private void seatButtonClick(Button btn)
         {
+
+            string btnText = btn.Text;
             int playerId = whoIsPlaying();
 
-            switch (buttonNbr)
+            int seatNbr = Int32.Parse(btnText);
+
+            if (dealer.playerWantsSeat(playerId, seatNbr))
             {
-                case 1:
-                    
-
-                    if (dealer.playerWantsSeat(playerId, 1))
-                    {
-
-                        seatButton1.Enabled = false;
-                        seatButton1.Text = "Player: " + playerId;
-                    }
-                    else
-                    {
-                        MessageBox.Show("That seat is already taken!", "Error",
-                        MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    }
-                    break;
+                btn.Enabled = false;
+                btn.Text = "Player " + playerId;
             }
+            else
+            {
+                MessageBox.Show("That seat is already taken!", "Error",
+                MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+
+
         }
 
+        /* Summary seat clicks.*/
         private void seatButton1_Click(object sender, EventArgs e)
         {
-            seatButtonClick(1);
-           
+            seatButtonClick(sender as Button);
         }
 
         private void seatButton2_Click(object sender, EventArgs e)
         {
-            if (dealer.playerWantsSeat(whoIsPlaying(), 2))
-            {
-                seatButton2.Enabled = false;
-            }
-            else
-            {
-                MessageBox.Show("That seat is already taken!", "Error",
-                MessageBoxButtons.OK, MessageBoxIcon.Information);
-            }
+            seatButtonClick(sender as Button);
         }
 
         private void seatButton3_Click(object sender, EventArgs e)
         {
-            if (dealer.playerWantsSeat(whoIsPlaying(), 3))
-            {
-                seatButton3.Enabled = false;
-            }
-            else
-            {
-                MessageBox.Show("That seat is already taken!", "Error",
-                MessageBoxButtons.OK, MessageBoxIcon.Information);
-            }
+            seatButtonClick(sender as Button);
         }
 
         private void seatButton4_Click(object sender, EventArgs e)
         {
-            if (dealer.playerWantsSeat(whoIsPlaying(), 4))
-            {
-                seatButton4.Enabled = false;
-            }
-            else
-            {
-                MessageBox.Show("That seat is already taken!", "Error",
-                MessageBoxButtons.OK, MessageBoxIcon.Information);
-            }
+            seatButtonClick(sender as Button);
         }
 
         private void seatButton5_Click(object sender, EventArgs e)
         {
-            if (dealer.playerWantsSeat(whoIsPlaying(), 5))
-            {
-                seatButton5.Enabled = false;
-            }
-            else
-            {
-                MessageBox.Show("That seat is already taken!", "Error",
-                MessageBoxButtons.OK, MessageBoxIcon.Information);
-            }
+            seatButtonClick(sender as Button);
         }
 
         private void seatButton6_Click(object sender, EventArgs e)
         {
-            if (dealer.playerWantsSeat(whoIsPlaying(), 6))
-            {
-                seatButton6.Enabled = false;
-            }
-            else
-            {
-                MessageBox.Show("That seat is already taken!", "Error",
-                MessageBoxButtons.OK, MessageBoxIcon.Information);
-            }
+            seatButtonClick(sender as Button);
         }
 
         private void seatButton7_Click(object sender, EventArgs e)
         {
-            if (dealer.playerWantsSeat(whoIsPlaying(), 7))
-            {
-                seatButton7.Enabled = false;
-            }
-            else
-            {
-                MessageBox.Show("That seat is already taken!", "Error",
-                MessageBoxButtons.OK, MessageBoxIcon.Information);
-            }
+            seatButtonClick(sender as Button);
         }
 
         private void MainForm_Load(object sender, EventArgs e)
         {
 
+        }
+
+        private void nextRoundButton_Click(object sender, EventArgs e)
+        {
+            // If there is atleast one seat picked. Start a new round.
+            // Dealer deals 1 own cards then gives 2 cards for each active hand. 
+            // player hits or stand for each hand. When its a new players turn change the current playing player to that
+            // of the active hand. 
+
+            List<Card> cards = dealer.startNewRound();
+
+
+        }
+
+        //Player wants hit on his hand.
+        private void playerHitButton_Click(object sender, EventArgs e)
+        {
+            int seatNbr = 0;
+            dealer.playerHit(seatNbr);
+        }
+
+        //Player wants to stand on the current value of hand.
+        private void playerStandButton_Click(object sender, EventArgs e)
+        {
+            int seatNbr = 0;
+            dealer.playerStand(seatNbr);
         }
     }
 }
