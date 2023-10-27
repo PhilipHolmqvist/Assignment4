@@ -36,7 +36,7 @@
             seatButton5 = new RoundButton();
             seatButton6 = new RoundButton();
             seatButton7 = new RoundButton();
-            label1 = new Label();
+            dealerScoreLabel = new Label();
             label2 = new Label();
             label3 = new Label();
             addNewPlayerButton = new Button();
@@ -132,16 +132,16 @@
             seatButton7.UseVisualStyleBackColor = true;
             seatButton7.Click += seatButton7_Click;
             // 
-            // label1
+            // dealerScoreLabel
             // 
-            label1.AutoSize = true;
-            label1.BackColor = Color.Transparent;
-            label1.Font = new Font("Segoe UI", 13F, FontStyle.Regular, GraphicsUnit.Point);
-            label1.Location = new Point(434, 35);
-            label1.Name = "label1";
-            label1.Size = new Size(139, 30);
-            label1.TabIndex = 8;
-            label1.Text = "Dealer score:";
+            dealerScoreLabel.AutoSize = true;
+            dealerScoreLabel.BackColor = Color.Transparent;
+            dealerScoreLabel.Font = new Font("Segoe UI", 13F, FontStyle.Regular, GraphicsUnit.Point);
+            dealerScoreLabel.Location = new Point(434, 35);
+            dealerScoreLabel.Name = "dealerScoreLabel";
+            dealerScoreLabel.Size = new Size(139, 30);
+            dealerScoreLabel.TabIndex = 8;
+            dealerScoreLabel.Text = "Dealer score:";
             // 
             // label2
             // 
@@ -302,7 +302,7 @@
             Controls.Add(groupBox1);
             Controls.Add(label3);
             Controls.Add(label2);
-            Controls.Add(label1);
+            Controls.Add(dealerScoreLabel);
             Controls.Add(seatButton7);
             Controls.Add(seatButton6);
             Controls.Add(seatButton5);
@@ -332,7 +332,7 @@
         private RoundButton seatButton5;
         private RoundButton seatButton6;
         private RoundButton seatButton7;
-        private Label label1;
+        private Label dealerScoreLabel;
         private Label label2;
         private Label label3;
         private Button addNewPlayerButton;

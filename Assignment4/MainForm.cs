@@ -1,5 +1,7 @@
 using GameCardLib;
 using Microsoft.VisualBasic.ApplicationServices;
+using System.Collections;
+using System.Runtime.ExceptionServices;
 
 namespace Assignment4
 {
@@ -7,6 +9,11 @@ namespace Assignment4
     {
 
         private Dealer dealer;
+        private readonly int cardOffsetY = 24;
+        private List<Hand> hands;
+        
+
+
 
         public MainForm()
         {
@@ -20,6 +27,7 @@ namespace Assignment4
             //label1.BackColor = Color.Transparent;
             pictureBox1.SendToBack();
             dealer = new Dealer();
+           
         }
 
         //Returns which player is playing. If noone is playing it returns -1.
@@ -119,54 +127,94 @@ namespace Assignment4
             pictureBox1.SendToBack();
         }
 
+        private Hand getDealerHand() //Returns the dealer hand. If the hand is not found, returns null.
+        {
+
+            foreach (Hand hand in hands)
+            {
+                int seatNbr = hand.getSeatNbr();
+                if (getSeatButton(seatNbr) == null)//Find the dealer hand.
+                {
+                    return hand;
+                }
+            }
+
+            return null;
+        }
+
+        private void displayScores()
+        {
+            dealerScoreLabel.Text = "Dealer Score " + getDealerHand().getScore();
+        }
+
+        private void placeDealerCards()
+        {
+            int posx = 430;
+            int posy = 200;
+
+            
+            List<Card> dealerCards = getDealerHand().getCards();
+
+            for (int i = 0; i < dealerCards.Count; i++)
+            {
+                addACard(dealerCards[i], posx, posy);
+                posx += 100; //When a new card is added to the frame, offset the pos for the next car                   }
+            }   
+        }
+
+        private void addACard(Card card, int posx, int posy)
+        {
+            String val = card.getValue().ToString();
+            String suit = card.getSuits().ToString();
+            PictureBox pictureBox = new PictureBox();
+            pictureBox.Size = new Size(83, 108);
+            pictureBox.Margin = new Padding(3, 3, 3, 3);
+            pictureBox.SizeMode = PictureBoxSizeMode.StretchImage;
+            pictureBox.Visible = true;
+            pictureBox.Image = Image.FromFile("./Images/all-cards/" + val + "_of_" + suit + ".png");
+
+            pictureBox.Location = new Point(posx, posy);
+            this.Controls.Add(pictureBox);
+            pictureBox.BringToFront();
+        }
+
+        private void placePlayerCards() //Places all cards that are in the hands list
+        {
+            foreach (Hand hand in hands)
+            {
+                List<Card> cards = hand.getCards(); //Get the cards in the hand.
+                int seatNbr = hand.getSeatNbr(); //Get the seat nbr of the hand.
+                Button seatButton = getSeatButton(seatNbr);
+                Point point;
+
+                if (seatButton != null) //Ignore if seatButton is null, that is the dealer hand.
+                {
+                    point = seatButton.Location; //get the location of the seat button.
+
+                    int posx = point.X;
+                    int posy = point.Y - 130; //offset for the card location.
+
+                    for (int i = 0; i < cards.Count; i++)
+                    {
+                        addACard(cards[i], posx, posy);
+                        posy -= cardOffsetY;
+                    }
+                }
+            }
+        }
+
         private void nextRoundButton_Click(object sender, EventArgs e)
         {
             // If there is atleast one seat picked. Start a new round.
             // Dealer deals 1 own cards then gives 2 cards for each active hand. 
             // player hits or stand for each hand. When its a new players turn change the current playing player to that
             // of the active hand. 
+          
 
-            List<Hand> hands = dealer.startNewRound();
-            foreach (Hand hand in hands)
-            {
-                int seatNbr = hand.getSeatNbr();
-                List<Card> cards = hand.getCards();
-
-                foreach (Card card in cards)
-                {
-                    String val = card.getValue().ToString();
-                    String suit = card.getSuits().ToString();
-
-                    PictureBox pictureBox5 = new PictureBox();
-                    pictureBox5.Size = new Size(83, 108);
-                    pictureBox5.Margin = new Padding(3, 3, 3, 3);
-                    pictureBox5.SizeMode = PictureBoxSizeMode.StretchImage;
-                    pictureBox5.Visible = true;
-                    pictureBox5.Image = Image.FromFile("./Images/all-cards/" + val + "_of_" + suit + ".png");
-
-                    //Base the card location on the button location.
-                    Point buttonLocation = getSeatButton(seatNbr).Location; // ger null pointer.
-
-                    int x;
-                    int y;
-
-                    if(buttonLocation != null) //Player card.
-                    {
-                        x = buttonLocation.X;
-                        y = buttonLocation.Y - 150;
-                    }
-                    else //Dealer card
-                    {
-                        x = 490;
-                        y = 200;
-                    }
-
-                    pictureBox5.Location = new Point(x, y);
-                    this.Controls.Add(pictureBox5);
-                    pictureBox5.BringToFront();
-
-                }
-            }
+            this.hands = dealer.startNewRound();
+            placePlayerCards();
+            placeDealerCards();
+            displayScores();
         }
 
         private Button getSeatButton(int seatNbr)
@@ -195,8 +243,10 @@ namespace Assignment4
         //Player wants hit on his hand.
         private void playerHitButton_Click(object sender, EventArgs e)
         {
-            int seatNbr = 0;
-            dealer.playerHit(seatNbr);
+            int seatNbr = dealer.playerTurn();
+            this.hands = dealer.playerHit(seatNbr);
+            placePlayerCards();
+
         }
 
         //Player wants to stand on the current value of hand.

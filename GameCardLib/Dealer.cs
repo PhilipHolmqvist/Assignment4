@@ -14,9 +14,11 @@ namespace GameCardLib
         private readonly int nbrOfCardDecks = 5;
         private GameDeck gameDeck;
         private ListManager<Player> players;
+        private int playerTurnIndex;
 
         public Dealer()
         {
+            this.playerTurnIndex = 7;
             this.players = new ListManager<Player>();
             instansiatePlayers();
             this.gameDeck = new GameDeck(nbrOfCardDecks);
@@ -86,9 +88,28 @@ namespace GameCardLib
             return true;
         }
 
-        public void playerHit(int seatNbr)
+        private Hand getHand(int seatNbr)
         {
-            throw new NotImplementedException();
+            foreach(Hand hand in getAllPlayersHands())
+            { 
+                if(hand.getSeatNbr() == seatNbr)
+                {
+                    return hand;
+                }
+            }
+            return null;
+        }
+
+        public List<Hand> playerHit(int seatNbr)
+        {
+            if (seatNbr != 0) //Ignore if its the dealer.
+            {
+                Hand playerHand = getHand(seatNbr);
+                Card card = gameDeck.drawCard();
+                playerHand.addCard(card);
+                return getAllPlayersHands();
+            }
+            return null;
         }
 
         public void playerStand(int seatNbr)
@@ -110,6 +131,7 @@ namespace GameCardLib
         {
             clearAllHands();
             clearScores();
+           
             return giveEachHandTwoCards();
         }
 
@@ -122,16 +144,91 @@ namespace GameCardLib
         {
             //Give all players and the dealer one card each. 
             List<Hand> hands = getAllPlayersHands();
+
             for(int i = 0; i < 2; i++) //Do the inside loop twice.
             {
                 for (int j = hands.Count - 1; j >= 0; j--) //We are iterating from right to left.
                 {
                     Card card = gameDeck.drawCard();
-                    hands[i].addCard(card);
+                    hands[j].addCard(card);
                 }
             }
 
             return hands;
         }
+
+        private Boolean checkIfDealersTurn()
+        {
+            return false;
+        }
+
+        public int playerTurn()
+        {
+
+            switch (playerTurnIndex)
+            {
+                case 0:
+                    if (checkIfDealersTurn())
+                    {
+                        dealersTurn();
+                    }
+                    else
+                    {
+                        return 7;
+                    }
+                    break;
+
+                case 1:
+                    playerTurnIndex -= 1;
+                    return 1;
+                    break;
+                case 2:
+                    playerTurnIndex -= 1;
+                    return 2;
+                    break;
+                case 3:
+                    playerTurnIndex -= 1;
+                    return 3;
+                    break;
+                case 4:
+                    playerTurnIndex -= 1;
+                    return 4;
+                    break;
+                case 5:
+                    playerTurnIndex -= 1;
+                    return 5;
+                    break;
+                case 6:
+                    playerTurnIndex -= 1;
+                    return 6;
+                    break;
+                case 7:
+                    playerTurnIndex -= 1;
+                    return 7;
+                    break;
+
+            }
+
+            if (playerTurnIndex == 0)
+            {
+                playerTurnIndex = 7;
+                return 0;
+            }else if(playerTurnIndex == 7)
+            {
+                playerTurnIndex -= 1;
+                return 7;
+            }
+
+            return playerTurnIndex;
+
+            
+        }
+
+        private void dealersTurn()
+        {
+            throw new NotImplementedException();
+        }
+
+      
     }
 }
