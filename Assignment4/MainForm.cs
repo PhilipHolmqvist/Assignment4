@@ -1,7 +1,9 @@
 using GameCardLib;
 using Microsoft.VisualBasic.ApplicationServices;
 using System.Collections;
+using System.ComponentModel;
 using System.Runtime.ExceptionServices;
+using System.Xml.Linq;
 
 namespace Assignment4
 {
@@ -9,11 +11,7 @@ namespace Assignment4
     {
 
         private Dealer dealer;
-        private readonly int cardOffsetY = 24;
-        private List<Hand> hands;
-        
-
-
+        private PlayerHandler playerHandler;
 
         public MainForm()
         {
@@ -27,93 +25,8 @@ namespace Assignment4
             //label1.BackColor = Color.Transparent;
             pictureBox1.SendToBack();
             dealer = new Dealer();
-           
-        }
+            playerHandler = new PlayerHandler();
 
-        //Returns which player is playing. If noone is playing it returns -1.
-        private int whoIsPlaying()
-        {
-            if (player1RadioButton.Checked)
-            {
-                return 1;
-            }
-
-            if (player2RadioButton.Checked)
-            {
-                return 2;
-            }
-
-            if (player3RadioButton.Checked)
-            {
-                return 3;
-            }
-
-            if (player4RadioButton.Checked)
-            {
-                return 4;
-            }
-
-            return -1;
-        }
-
-
-        //A player wants a seat. Check with dealer for availabilty. 
-        private void seatButtonClick(Button btn)
-        {
-
-            string btnText = btn.Text;
-            int playerId = whoIsPlaying();
-
-            int seatNbr = Int32.Parse(btnText);
-
-            if (dealer.playerWantsSeat(playerId, seatNbr))
-            {
-                btn.Enabled = false;
-                btn.Text = "Player " + playerId;
-            }
-            else
-            {
-                MessageBox.Show("That seat is already taken!", "Error",
-                MessageBoxButtons.OK, MessageBoxIcon.Information);
-            }
-
-
-        }
-
-        /* Summary seat clicks.*/
-        private void seatButton1_Click(object sender, EventArgs e)
-        {
-            seatButtonClick(sender as Button);
-        }
-
-        private void seatButton2_Click(object sender, EventArgs e)
-        {
-            seatButtonClick(sender as Button);
-        }
-
-        private void seatButton3_Click(object sender, EventArgs e)
-        {
-            seatButtonClick(sender as Button);
-        }
-
-        private void seatButton4_Click(object sender, EventArgs e)
-        {
-            seatButtonClick(sender as Button);
-        }
-
-        private void seatButton5_Click(object sender, EventArgs e)
-        {
-            seatButtonClick(sender as Button);
-        }
-
-        private void seatButton6_Click(object sender, EventArgs e)
-        {
-            seatButtonClick(sender as Button);
-        }
-
-        private void seatButton7_Click(object sender, EventArgs e)
-        {
-            seatButtonClick(sender as Button);
         }
 
         private void MainForm_Load(object sender, EventArgs e)
@@ -127,40 +40,13 @@ namespace Assignment4
             pictureBox1.SendToBack();
         }
 
-        private Hand getDealerHand() //Returns the dealer hand. If the hand is not found, returns null.
-        {
-
-            foreach (Hand hand in hands)
-            {
-                int seatNbr = hand.getSeatNbr();
-                if (getSeatButton(seatNbr) == null)//Find the dealer hand.
-                {
-                    return hand;
-                }
-            }
-
-            return null;
-        }
+        
 
         private void displayScores()
         {
-            dealerScoreLabel.Text = "Dealer Score " + getDealerHand().getScore();
+
         }
 
-        private void placeDealerCards()
-        {
-            int posx = 430;
-            int posy = 200;
-
-            
-            List<Card> dealerCards = getDealerHand().getCards();
-
-            for (int i = 0; i < dealerCards.Count; i++)
-            {
-                addACard(dealerCards[i], posx, posy);
-                posx += 100; //When a new card is added to the frame, offset the pos for the next car                   }
-            }   
-        }
 
         private void addACard(Card card, int posx, int posy)
         {
@@ -178,82 +64,118 @@ namespace Assignment4
             pictureBox.BringToFront();
         }
 
-        private void placePlayerCards() //Places all cards that are in the hands list
+        private void placePlayerCards(int playerId, List<Card> cards) //Places all cards that are in the hands list
         {
-            foreach (Hand hand in hands)
+            Point point;
+            RadioButton button = getRadioButton(playerId);
+            if(button != null)
             {
-                List<Card> cards = hand.getCards(); //Get the cards in the hand.
-                int seatNbr = hand.getSeatNbr(); //Get the seat nbr of the hand.
-                Button seatButton = getSeatButton(seatNbr);
-                Point point;
+                point = button.Location;
 
-                if (seatButton != null) //Ignore if seatButton is null, that is the dealer hand.
+                int posx = point.X;
+                int posy = point.Y - 130; //offset for the card location.
+
+                for (int i = 0; i < cards.Count; i++)
                 {
-                    point = seatButton.Location; //get the location of the seat button.
-
-                    int posx = point.X;
-                    int posy = point.Y - 130; //offset for the card location.
-
-                    for (int i = 0; i < cards.Count; i++)
-                    {
-                        addACard(cards[i], posx, posy);
-                        posy -= cardOffsetY;
-                    }
+                    addACard(cards[i], posx, posy);
+                    posy -= 24;
                 }
             }
         }
 
         private void nextRoundButton_Click(object sender, EventArgs e)
         {
-            // If there is atleast one seat picked. Start a new round.
-            // Dealer deals 1 own cards then gives 2 cards for each active hand. 
-            // player hits or stand for each hand. When its a new players turn change the current playing player to that
-            // of the active hand. 
-          
-
-            this.hands = dealer.startNewRound();
-            placePlayerCards();
-            placeDealerCards();
-            displayScores();
+            dealer.newRoundStart();
+            
         }
 
-        private Button getSeatButton(int seatNbr)
+        private RadioButton getRadioButton(int playerId)
         {
 
-            switch (seatNbr)
+            
+            switch (playerId)
             {
                 case 1:
-                    return seatButton1;
+                    return radioButton1;
                 case 2:
-                    return seatButton2;
+                    return radioButton2;
                 case 3:
-                    return seatButton3;
+                    return radioButton3;
                 case 4:
-                    return seatButton4;
+                    return radioButton4;
                 case 5:
-                    return seatButton5;
+                    return radioButton5;
                 case 6:
-                    return seatButton6;
+                    return radioButton6;
                 case 7:
-                    return seatButton7;
+                    return radioButton7;
+
+                default: return null;
+
             }
-            return null;
         }
+
+        private int getPlayerId()
+        {
+            var checkedButton = this.Controls.OfType<RadioButton>()
+                                      .FirstOrDefault(r => r.Checked);
+
+            switch(checkedButton.Name.ToString()){
+
+                case "radioButton7":
+                    return 7;
+
+                case "radioButton6":
+                    return 6;
+
+                case "radioButton5":
+                    return 5;
+
+                case "radioButton4":
+                    return 4;
+
+                case "radioButton3":
+                    return 3;
+
+                case "radioButton2":
+                    return 2;
+
+                case "radioButton1":
+                    return 1;
+
+                default: return 0;
+ 
+            }
+        }
+
 
         //Player wants hit on his hand.
         private void playerHitButton_Click(object sender, EventArgs e)
         {
-            int seatNbr = dealer.playerTurn();
-            this.hands = dealer.playerHit(seatNbr);
-            placePlayerCards();
-
+            List<Card> card = playerHandler.playerHit(getPlayerId());
+            if (card != null)
+            {
+                placePlayerCards(getPlayerId(), card);
+                MessageBox.Show("Player has pressed hit!", "Its a hit!", MessageBoxButtons.OK, MessageBoxIcon.Hand);
+            }
         }
 
         //Player wants to stand on the current value of hand.
         private void playerStandButton_Click(object sender, EventArgs e)
         {
-            int seatNbr = 0;
-            dealer.playerStand(seatNbr);
+            playerHandler.playerStand(getPlayerId());
+            MessageBox.Show("Player stands!", "Its a stand!", MessageBoxButtons.OK, MessageBoxIcon.Hand);
+        }
+
+        private void radioButton1_CheckedChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void addNewPlayerButton_Click(object sender, EventArgs e)
+        {
+            //Show player controll. Set actionLabel to add. Check that name isnt already in the player list.
+            //Check that the user has chosen a available seat with radio button. Create new player.
         }
     }
 }

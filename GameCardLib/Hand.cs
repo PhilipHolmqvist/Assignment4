@@ -9,13 +9,11 @@ namespace GameCardLib
 {
     public class Hand
     {
-        private int seatNbr;
         private List<Card> cards;
         private int score;
 
         public Hand(int seatNbr)
         {
-            this.seatNbr = seatNbr;
             this.cards = new List<Card>();
             this.score = 0;
         }
@@ -42,11 +40,6 @@ namespace GameCardLib
             return cards.Count;
         }
 
-        public void handHit()
-        {
-
-        }
-
         public Boolean addCard(Card card)
         {
             cards.Add(card);
@@ -57,17 +50,6 @@ namespace GameCardLib
         {
             this.cards.Clear();
             this.score = 0;
-            return true;
-        }
-
-
-        public int getSeatNbr() {
-            return seatNbr;
-        }
-
-        public Boolean setSeatNbr(int seatNbr)
-        {
-            this.seatNbr = seatNbr;
             return true;
         }
 

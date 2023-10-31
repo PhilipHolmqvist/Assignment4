@@ -9,8 +9,10 @@ namespace GameCardLib
     public class Player
     {
         private Hand hand;
+        public event EventHandler<PlayerEvent> playerHit;
+        public event EventHandler<PlayerEvent> playerStand;
 
-        private int playerId
+        public int playerId
         { get; }
         private Boolean isFinished
         { get; set; }
@@ -24,21 +26,37 @@ namespace GameCardLib
 
         }
 
+        public void hit(Card card) //Player wants to hit. 
+        {
+            hand.addCard(card);
+            PlayerEvent action = new PlayerEvent(true);
+            OnPlayerHit(action);
+        }
 
-        public void onPlayerAction(Player player, Enums.Actions action) {
-            if (player == this)
+        //Player wants to stand. 
+        public void stand()
+        {
+            PlayerEvent action = new PlayerEvent(false);
+            OnPlayerStand(action);
+        }
+
+
+        //Raise event
+        private void OnPlayerStand(PlayerEvent e)
+        {
+            if (playerStand != null)
             {
-                if(action == Enums.Actions.hit)
-                {
-                    hand.
-                }
+                playerStand(this, e);
             }
         }
 
-        public Boolean addHand(int seatNbr)
+        //Raise event
+        private void OnPlayerHit(PlayerEvent e)
         {
-            this.hand = new Hand(seatNbr);
-            return true;
+            if (playerHit != null)
+            {
+                playerHit(this, e);
+            }
         }
 
         public Hand getHand()

@@ -32,7 +32,7 @@ namespace GameCardLib
         {
             for(int i = 0; i < nbrOfCardDecks; i++)
             {
-                deckManager.shuffleItemsInList();
+                deckManager.GetAt(i).shuffleDeck();
             }
 
             return true;
