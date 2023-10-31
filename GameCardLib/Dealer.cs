@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using UtilitiesLib;
 
+
 namespace GameCardLib
 {
     public class Dealer
@@ -16,6 +17,9 @@ namespace GameCardLib
         private ListManager<Player> players;
         private int playerTurnIndex;
 
+        public delegate void playerActionEventHandeler(Player player, Enums.Actions action);
+        public event playerActionEventHandeler playerHit;
+
         public Dealer()
         {
             this.playerTurnIndex = 7;
@@ -23,6 +27,29 @@ namespace GameCardLib
             instansiatePlayers();
             this.gameDeck = new GameDeck(nbrOfCardDecks);
         }
+
+
+        public void onPlayerAction(int seatNbr, Enums.Actions action)
+        {
+            if(playerHit != null)
+            {
+                playerHit(getPlayerFromSeatNbr(seatNbr), action);
+            }
+        }
+
+
+       private Player getPlayerFromSeatNbr(int seatNbr)
+        {
+            foreach(Player player in players)
+            {
+                if( player.getHand().getSeatNbr() == seatNbr)
+                {
+                    return player;
+                }
+            }
+            return null;
+        }
+
 
         private void instansiatePlayers()
         {
@@ -37,10 +64,7 @@ namespace GameCardLib
             players.Add(new Player(4));
         }
 
-        public ListManager<Player> GetPlayers()
-        {
-            return players;
-        }
+       
 
         private Player getPlayer(int playerNbr)
         {
@@ -62,11 +86,7 @@ namespace GameCardLib
             for (int i = 0; i < players.Count(); i++)
             {
                 Player p = players.GetAt(i);
-                List<Hand> playerHands = p.GetHands();
-                foreach (Hand hand in playerHands)
-                {
-                    hands.Add(hand);
-                }
+                hands.Add(p.getHand());
             }
             return hands;
         }
@@ -91,15 +111,17 @@ namespace GameCardLib
         private Hand getHand(int seatNbr)
         {
             foreach(Hand hand in getAllPlayersHands())
-            { 
+            {
                 if(hand.getSeatNbr() == seatNbr)
                 {
                     return hand;
                 }
             }
+
             return null;
         }
 
+        /*
         public List<Hand> playerHit(int seatNbr)
         {
             if (seatNbr != 0) //Ignore if its the dealer.
@@ -111,6 +133,7 @@ namespace GameCardLib
             }
             return null;
         }
+        */
 
         public void playerStand(int seatNbr)
         {

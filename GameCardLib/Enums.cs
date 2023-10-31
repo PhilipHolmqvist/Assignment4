@@ -9,6 +9,12 @@ namespace GameCardLib
     public class Enums
     {
 
+        public enum Actions
+        {
+            hit,
+            stand
+        }
+
         public enum Suits
         {
             clubs,

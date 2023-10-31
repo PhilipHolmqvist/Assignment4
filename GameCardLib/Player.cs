@@ -8,24 +8,42 @@ namespace GameCardLib
 {
     public class Player
     {
-        
-        private int playerId;
-        private List<Hand> hands; //each player can have multiple hands.
+        private Hand hand;
+
+        private int playerId
+        { get; }
+        private Boolean isFinished
+        { get; set; }
+        private Boolean winner 
+        { get; set; }
 
         public Player(int playerId) {
             this.playerId = playerId;
-            this.hands = new List<Hand>();
+            this.isFinished = false;
+            this.winner = false;
+
+        }
+
+
+        public void onPlayerAction(Player player, Enums.Actions action) {
+            if (player == this)
+            {
+                if(action == Enums.Actions.hit)
+                {
+                    hand.
+                }
+            }
         }
 
         public Boolean addHand(int seatNbr)
         {
-            hands.Add(new Hand(seatNbr));
+            this.hand = new Hand(seatNbr);
             return true;
         }
 
-        public List<Hand> GetHands()
+        public Hand getHand()
         {
-            return hands;
+            return hand;
         }
 
         public int getPlayerId()

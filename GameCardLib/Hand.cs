@@ -42,6 +42,11 @@ namespace GameCardLib
             return cards.Count;
         }
 
+        public void handHit()
+        {
+
+        }
+
         public Boolean addCard(Card card)
         {
             cards.Add(card);
