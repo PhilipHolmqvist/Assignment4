@@ -14,21 +14,29 @@ namespace GameCardLib
 
         public int playerId
         { get; }
-        private Boolean isFinished
+        public Boolean isFinished
         { get; set; }
         private Boolean winner 
         { get; set; }
+        private string playerName
+        { get; set; }
 
-        public Player(int playerId) {
+        public Player(string playername, int playerId) {
             this.playerId = playerId;
             this.isFinished = false;
             this.winner = false;
+            this.playerName = playername;
+            this.hand = new Hand();
 
         }
 
         public void hit(Card card) //Player wants to hit. 
         {
             hand.addCard(card);
+            if(hand.getCurrentHandValue() > 21 )
+            {
+                this.isFinished = true;
+            }
             PlayerEvent action = new PlayerEvent(true);
             OnPlayerHit(action);
         }

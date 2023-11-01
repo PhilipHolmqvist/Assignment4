@@ -16,5 +16,26 @@ namespace Assignment4
         {
             InitializeComponent();
         }
+
+        public void setActionLabel(string actionLabel)
+        {
+            this.actionLabel.Text = actionLabel;
+        }
+
+        private void actionLabel_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            var mainForm = Parent as MainForm;
+            mainForm.addOrRemovePlayer(textBox1.Text, actionLabel.Text);
+        }
+
+        private void textBox1_TextChanged(object sender, EventArgs e)
+        {
+
+        }
     }
 }

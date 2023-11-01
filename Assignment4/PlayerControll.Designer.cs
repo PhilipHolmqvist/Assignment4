@@ -30,9 +30,9 @@
         {
             label1 = new Label();
             groupBox1 = new GroupBox();
-            textBox1 = new TextBox();
-            button1 = new Button();
             actionLabel = new Label();
+            button1 = new Button();
+            textBox1 = new TextBox();
             groupBox1.SuspendLayout();
             SuspendLayout();
             // 
@@ -58,12 +58,15 @@
             groupBox1.TabStop = false;
             groupBox1.Text = "Player Controlls";
             // 
-            // textBox1
+            // actionLabel
             // 
-            textBox1.Location = new Point(128, 76);
-            textBox1.Name = "textBox1";
-            textBox1.Size = new Size(100, 23);
-            textBox1.TabIndex = 2;
+            actionLabel.AutoSize = true;
+            actionLabel.Location = new Point(94, 33);
+            actionLabel.Name = "actionLabel";
+            actionLabel.Size = new Size(64, 15);
+            actionLabel.TabIndex = 4;
+            actionLabel.Text = "Add player";
+            actionLabel.Click += actionLabel_Click;
             // 
             // button1
             // 
@@ -73,15 +76,15 @@
             button1.TabIndex = 3;
             button1.Text = "OK";
             button1.UseVisualStyleBackColor = true;
+            button1.Click += button1_Click;
             // 
-            // actionLabel
+            // textBox1
             // 
-            actionLabel.AutoSize = true;
-            actionLabel.Location = new Point(94, 33);
-            actionLabel.Name = "actionLabel";
-            actionLabel.Size = new Size(64, 15);
-            actionLabel.TabIndex = 4;
-            actionLabel.Text = "Add player";
+            textBox1.Location = new Point(128, 76);
+            textBox1.Name = "textBox1";
+            textBox1.Size = new Size(100, 23);
+            textBox1.TabIndex = 2;
+            textBox1.TextChanged += textBox1_TextChanged;
             // 
             // PlayerControll
             // 

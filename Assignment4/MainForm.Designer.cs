@@ -47,6 +47,14 @@
             radioButton2 = new RadioButton();
             radioButton1 = new RadioButton();
             playerControll1 = new PlayerControll();
+            dealerButton = new RadioButton();
+            scoreLabel1 = new Label();
+            scoreLabel2 = new Label();
+            scoreLabel3 = new Label();
+            scoreLabel4 = new Label();
+            scoreLabel5 = new Label();
+            scoreLabel6 = new Label();
+            scoreLabel7 = new Label();
             groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             SuspendLayout();
@@ -134,6 +142,7 @@
             removePlayerButton.TabIndex = 15;
             removePlayerButton.Text = "Remove Player";
             removePlayerButton.UseVisualStyleBackColor = true;
+            removePlayerButton.Click += removePlayerButton_Click;
             // 
             // nextRoundButton
             // 
@@ -159,7 +168,6 @@
             // radioButton7
             // 
             radioButton7.AutoSize = true;
-            radioButton7.Enabled = false;
             radioButton7.Location = new Point(771, 491);
             radioButton7.Name = "radioButton7";
             radioButton7.Size = new Size(14, 13);
@@ -234,11 +242,93 @@
             playerControll1.Size = new Size(317, 222);
             playerControll1.TabIndex = 28;
             // 
+            // dealerButton
+            // 
+            dealerButton.AutoSize = true;
+            dealerButton.Location = new Point(331, 260);
+            dealerButton.Name = "dealerButton";
+            dealerButton.Size = new Size(14, 13);
+            dealerButton.TabIndex = 29;
+            dealerButton.TabStop = true;
+            dealerButton.UseVisualStyleBackColor = true;
+            dealerButton.Visible = false;
+            // 
+            // scoreLabel1
+            // 
+            scoreLabel1.AutoSize = true;
+            scoreLabel1.Location = new Point(62, 509);
+            scoreLabel1.Name = "scoreLabel1";
+            scoreLabel1.Size = new Size(42, 15);
+            scoreLabel1.TabIndex = 30;
+            scoreLabel1.Text = "Score1";
+            // 
+            // scoreLabel2
+            // 
+            scoreLabel2.AutoSize = true;
+            scoreLabel2.Location = new Point(179, 549);
+            scoreLabel2.Name = "scoreLabel2";
+            scoreLabel2.Size = new Size(42, 15);
+            scoreLabel2.TabIndex = 31;
+            scoreLabel2.Text = "Score2";
+            // 
+            // scoreLabel3
+            // 
+            scoreLabel3.AutoSize = true;
+            scoreLabel3.Location = new Point(292, 570);
+            scoreLabel3.Name = "scoreLabel3";
+            scoreLabel3.Size = new Size(42, 15);
+            scoreLabel3.TabIndex = 32;
+            scoreLabel3.Text = "Score3";
+            // 
+            // scoreLabel4
+            // 
+            scoreLabel4.AutoSize = true;
+            scoreLabel4.Location = new Point(407, 578);
+            scoreLabel4.Name = "scoreLabel4";
+            scoreLabel4.Size = new Size(42, 15);
+            scoreLabel4.TabIndex = 33;
+            scoreLabel4.Text = "Score4";
+            // 
+            // scoreLabel5
+            // 
+            scoreLabel5.AutoSize = true;
+            scoreLabel5.Location = new Point(525, 570);
+            scoreLabel5.Name = "scoreLabel5";
+            scoreLabel5.Size = new Size(42, 15);
+            scoreLabel5.TabIndex = 34;
+            scoreLabel5.Text = "Score5";
+            // 
+            // scoreLabel6
+            // 
+            scoreLabel6.AutoSize = true;
+            scoreLabel6.Location = new Point(647, 551);
+            scoreLabel6.Name = "scoreLabel6";
+            scoreLabel6.Size = new Size(42, 15);
+            scoreLabel6.TabIndex = 35;
+            scoreLabel6.Text = "Score6";
+            // 
+            // scoreLabel7
+            // 
+            scoreLabel7.AutoSize = true;
+            scoreLabel7.Location = new Point(758, 509);
+            scoreLabel7.Name = "scoreLabel7";
+            scoreLabel7.Size = new Size(42, 15);
+            scoreLabel7.TabIndex = 36;
+            scoreLabel7.Text = "Score7";
+            // 
             // MainForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1313, 700);
+            Controls.Add(scoreLabel7);
+            Controls.Add(scoreLabel6);
+            Controls.Add(scoreLabel5);
+            Controls.Add(scoreLabel4);
+            Controls.Add(scoreLabel3);
+            Controls.Add(scoreLabel2);
+            Controls.Add(scoreLabel1);
+            Controls.Add(dealerButton);
             Controls.Add(playerControll1);
             Controls.Add(radioButton1);
             Controls.Add(radioButton2);
@@ -282,5 +372,13 @@
         private RadioButton radioButton3;
         private RadioButton radioButton2;
         private RadioButton radioButton86;
+        private RadioButton dealerButton;
+        private Label scoreLabel1;
+        private Label scoreLabel2;
+        private Label scoreLabel3;
+        private Label scoreLabel4;
+        private Label scoreLabel5;
+        private Label scoreLabel6;
+        private Label scoreLabel7;
     }
 }

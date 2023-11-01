@@ -15,20 +15,34 @@ namespace GameCardLib
         public PlayerHandler() { }
 
 
-        //This method raises an event in the player object.
-        public List<Card> playerHit(int playerId) 
+        public Player nextPlayer()
         {
-            List<Card> cards = null;
+            List<Player> list = players.toList(); 
+            list = list.OrderByDescending(i => i.playerId).ToList(); //Make sure the list is sorted before checking.
+
+            foreach (Player player in list) {
+                if(player.isFinished == false)
+                {
+                    return player;
+                }
+            }
+            return null;
+        }
+
+        //This method raises an event in the player object.
+        public Hand playerHit(int playerId) 
+        {
+            Hand hand = null;
 
             if (getPlayer(playerId) != null)
             {
                 Card card = gameDeck.drawCard();
                 getPlayer(playerId).hit(card);
 
-                cards = getPlayer(playerId).getHand().getCards();
+                hand = getPlayer(playerId).getHand();
             }
 
-            return cards;
+            return hand;
         }
 
         //This method raises an event in the player object.
@@ -44,17 +58,15 @@ namespace GameCardLib
             return playerHasStand;
         }
 
-
-        public void addPlayer(Player player)
+        public void addPlayer(string playerName, int playerId)
         {
-            players.Add(player);
+            players.Add(new Player(playerName, playerId));
         }
 
         public void removePlayer(int playerId) {
         
         }
 
-        //Helper methods
         public Player getPlayer(int playerId)
         {
            for(int i = 0; i < players.Count(); i++)
@@ -65,6 +77,23 @@ namespace GameCardLib
                 }
            }
             return null;
+        }
+
+        public List<int> newRoundStart() //A new round is started. View needs to know which seats are playing.
+        {
+            List<int> playingSeats = new List <int>();
+
+            foreach(Player player in players) //Return each players id. 
+            {
+                playingSeats.Add(player.playerId);
+            }
+
+            return playingSeats.OrderByDescending(id => id).ToList();
+        }
+
+        public Card getCardForDealer()
+        {
+            return gameDeck.drawCard();
         }
     }
 }

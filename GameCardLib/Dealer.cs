@@ -15,23 +15,26 @@ namespace GameCardLib
     //This class is the subscriber. 
     public class Dealer
     {
-        private Boolean roundStart;
-        private Boolean roundEnd;
+        public Boolean roundStart;
+        public Boolean roundEnd;
         private int dealerScore;
         private List<Card> dealerCards;
         private int publishers;
 
-
-
         public Dealer()
-        { 
-            
+        {
+            this.dealerCards = new List<Card>();
+            this.roundStart = false;
+            this.roundEnd = true;
         }
 
 
-        public void newRoundStart()
+        public List<Card> newRoundStart(Card card)
         {
             roundStart = true;
+            roundEnd = false;
+            dealerCards.Add(card);
+            return dealerCards;
         }
 
 

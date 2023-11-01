@@ -135,5 +135,16 @@ namespace UtilitiesLib
             }
             return strings;
         }
+
+        //Returns a List<T> of all the objeccts.
+        public List<T> toList()
+        {
+            List<T> list = new List<T>();
+            for (int i = 0; i < m_List.Count; i++)
+            {
+                list.Add(m_List[i]);
+            }
+            return list;
+        }
     }
 }
