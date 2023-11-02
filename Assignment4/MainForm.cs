@@ -3,7 +3,9 @@ using Microsoft.VisualBasic.ApplicationServices;
 using System.Collections;
 using System.ComponentModel;
 using System.Runtime.ExceptionServices;
+using System.Windows.Forms;
 using System.Xml.Linq;
+using UtilitiesLib;
 using static GameCardLib.Enums;
 
 namespace Assignment4
@@ -11,8 +13,8 @@ namespace Assignment4
     public partial class MainForm : Form
     {
 
-        private Dealer dealer;
-        private PlayerHandler playerHandler;
+        private GameHandler gameHandler;
+        private List<PictureBox> pictureBoxes = new List<PictureBox>();
 
         public MainForm()
         {
@@ -25,8 +27,7 @@ namespace Assignment4
             //label1.Parent = pictureBox1;
             //label1.BackColor = Color.Transparent;
             pictureBox1.SendToBack();
-            dealer = new Dealer();
-            playerHandler = new PlayerHandler();
+            gameHandler = new GameHandler();
             playerControll1.Visible = false;
 
         }
@@ -60,7 +61,7 @@ namespace Assignment4
             pictureBox.SizeMode = PictureBoxSizeMode.StretchImage;
             pictureBox.Visible = true;
             pictureBox.Image = Image.FromFile("./Images/all-cards/" + val + "_of_" + suit + ".png");
-
+            this.pictureBoxes.Add(pictureBox);
             pictureBox.Location = new Point(posx, posy);
             this.Controls.Add(pictureBox);
             pictureBox.BringToFront();
@@ -86,16 +87,20 @@ namespace Assignment4
                 }
 
                 setScoreLabel(playerId, score);
+                if(score > 21) {
+                    MessageBox.Show("Player bust with score: " + score, "BUST!", MessageBoxButtons.OK);
+                }
 
             }
         }
 
+        //Sets the score label for a player. 
         private void setScoreLabel(int playerId, int playerScore)
         {
             switch (playerId)
             {
                 case 0:
-                    dealerScoreLabel.Text = "Dealer Score: " + playerScore.ToString(); 
+                    dealerScoreLabel.Text = "Dealer Score: " + playerScore.ToString();
                     break;
 
                 case 1:
@@ -122,6 +127,7 @@ namespace Assignment4
             }
         }
 
+        //Places the dealer cards on the correct location. If only one card place an upside down next to it.
         private void placeDealerCards(List<Card> cards)
         {
             Point point;
@@ -144,7 +150,7 @@ namespace Assignment4
                     pictureBox.SizeMode = PictureBoxSizeMode.StretchImage;
                     pictureBox.Visible = true;
                     pictureBox.Image = Image.FromFile("./Images/backside.png");
-
+                    this.pictureBoxes.Add(pictureBox);
                     pictureBox.Location = new Point(posx, posy);
                     this.Controls.Add(pictureBox);
                     pictureBox.BringToFront();
@@ -167,53 +173,82 @@ namespace Assignment4
 
         private void roundFinished()
         {
+            MessageBox.Show("Round finished!", "Yey", MessageBoxButtons.OK);
             nextRoundButton.Enabled = true;
             addNewPlayerButton.Enabled = true;
             removePlayerButton.Enabled = true;
             playerControll1.Visible = true;
-        }
+            clearHandsButton.Enabled = true;
 
-        private void playRound()
-        {
-            List<int> seatsPlaying = playerHandler.newRoundStart(); //Gets which seats that should preform action.
-
-            //Deal out two cards for each player
-            foreach (int seat in seatsPlaying)
+            List<Player> playerList = gameHandler.whoIsWinner();
+            if(playerList.Count > 0 )
             {
-                playerHandler.playerHit(seat);
-                Hand playerHand = playerHandler.playerHit(seat);
-                placePlayerCards(seat, playerHand.getCards());
-                MessageBox.Show("Player with id: " + seat + " got two cards", "Lets goo", MessageBoxButtons.OK);
+                String displayString = "Winners are:";
+
+                foreach (Player player in playerList)
+                {
+                    displayString += "\n Player: " + player.playerName + ", with seat " + player.playerId;
+                }
+
+                MessageBox.Show(displayString, "Winners", MessageBoxButtons.OK);
             }
-
-            //Place the dealer card
-            List<Card> dealerCards = dealer.newRoundStart(playerHandler.getCardForDealer());
-            placeDealerCards(dealerCards);
-
-
-            int first = seatsPlaying.First();
-            RadioButton button = getRadioButton(first);
-            button.Enabled = true;
-            button.Checked = true;
+            else
+            {
+                MessageBox.Show("No winners!", "Loser!", MessageBoxButtons.OK);
+            }
+           
 
             
         }
 
+        private void playRound()
+        {
+
+            ListManager<Player> players = gameHandler.startRound();
+
+            foreach (Player player in players)
+            {
+                if (player.playerId != 0)
+                {
+                    List<Card> playerCards = player.getHand().getCards();
+                    placePlayerCards(player.getPlayerId(), playerCards);
+
+                }
+                else if (player.playerId == 0)
+                {
+                    List<Card> dealerCards = player.getHand().getCards();
+                    placeDealerCards(dealerCards);
+                }
+
+            }
+            nextPlayer();
+        }
+
         private void nextRoundButton_Click(object sender, EventArgs e)
         {
-            if (dealer.roundEnd == true)
-            {
-                playRound();
-
-                nextRoundButton.Enabled = false;
-                addNewPlayerButton.Enabled = false;
-                removePlayerButton.Enabled = false;
-                playerControll1.Visible = false;
-
-                MessageBox.Show("New round started", "Lets goo", MessageBoxButtons.OK);
-            }
 
 
+
+            playRound();
+
+            nextRoundButton.Enabled = false;
+            addNewPlayerButton.Enabled = false;
+            removePlayerButton.Enabled = false;
+            playerControll1.Visible = false;
+            clearHandsButton.Enabled = false;
+
+            MessageBox.Show("New round started", "Lets goo", MessageBoxButtons.OK);
+
+
+
+        }
+
+        private void dealerPlay()
+        {
+            Player dealer = gameHandler.dealerPlay();
+            placeDealerCards(dealer.getHand().getCards());
+
+            roundFinished();
         }
 
         private RadioButton getRadioButton(int playerId)
@@ -288,37 +323,41 @@ namespace Assignment4
 
         private void nextPlayer()
         {
-            if(dealer.roundEnd != true)
+
+            int playerId = gameHandler.whoIsNextPlayer();
+
+            if (playerId != 0)
             {
-                int playerId = playerHandler.nextPlayer().getPlayerId();
                 RadioButton button = getRadioButton(playerId);
                 button.Enabled = true;
                 button.Checked = true;
             }
             else
             {
-                
+                dealerPlay();
             }
-            
         }
 
-        //Player wants hit on his hand.
+        //Player wants hit on his hand. Places the cards when they are returned.
         private void playerHitButton_Click(object sender, EventArgs e)
         {
-            Hand hand = playerHandler.playerHit(getPlayerId());
+            Hand hand = gameHandler.playerHit(getPlayerId());
             if (hand != null)
             {
                 placePlayerCards(getPlayerId(), hand.getCards());
-                MessageBox.Show("Player has pressed hit!", "Its a hit!", MessageBoxButtons.OK, MessageBoxIcon.Hand);
+                if (gameHandler.getPlayer(getPlayerId()).isFinished == true)
+                {
+                    nextPlayer();
+                }
+               
             }
         }
 
         //Player wants to stand on the current value of hand.
         private void playerStandButton_Click(object sender, EventArgs e)
         {
-            playerHandler.playerStand(getPlayerId());
+            gameHandler.playerStand(getPlayerId());
             nextPlayer();
-            MessageBox.Show("Player stands!", "Its a stand!", MessageBoxButtons.OK, MessageBoxIcon.Hand);
         }
 
         private void radioButton1_CheckedChanged(object sender, EventArgs e)
@@ -338,13 +377,13 @@ namespace Assignment4
 
                 if (action == "Add player")
                 {
-                    playerHandler.addPlayer(playerName, playerId);
+                    gameHandler.addPlayer(playerName, playerId);
                     getRadioButton(playerId).Enabled = false;
 
                 }
                 else if (action == "Remove player")
                 {
-                    playerHandler.removePlayer(playerId);
+                    gameHandler.removePlayerFromGame(playerId);
                 }
             }
             else
@@ -368,6 +407,51 @@ namespace Assignment4
         {
             playerControll1.Visible = true;
             playerControll1.setActionLabel("Remove player");
+        }
+
+        private void clearHandsButton_Click(object sender, EventArgs e)
+        {
+           
+            //remove cards.
+            dealerScoreLabel.Text = "Dealer Score: ";
+            scoreLabel1.Text = "Score1";
+            scoreLabel2.Text = "Score2";
+            scoreLabel3.Text = "Score3";
+            scoreLabel4.Text = "Score4";
+            scoreLabel5.Text = "Score5";
+            scoreLabel6.Text = "Score6";
+            scoreLabel7.Text = "Score7";
+
+            
+
+            foreach(PictureBox pictureBox in pictureBoxes)
+            {
+                this.Controls.Remove(pictureBox);
+            }
+
+            pictureBoxes.Clear();
+            gameHandler = new GameHandler();
+
+            radioButton1.Enabled = true;
+            radioButton2.Enabled = true;
+            radioButton3.Enabled = true;
+            radioButton4.Enabled = true;
+            radioButton5.Enabled = true;
+            radioButton6.Enabled = true;
+            radioButton7.Enabled = true;
+
+            radioButton1.Checked = false;
+            radioButton2.Checked = false;
+            radioButton3.Checked = false;
+            radioButton4.Checked = false;
+            radioButton5.Checked = false;
+            radioButton6.Checked = false;
+            radioButton7.Checked = false;
+
+
+
+
+
         }
     }
 }

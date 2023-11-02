@@ -11,16 +11,28 @@ namespace GameCardLib
     {
         private List<Card> cards;
         private int score;
+        private Boolean isBust;
 
         public Hand()
         {
             this.cards = new List<Card>();
             this.score = 0;
+            this.isBust = false;
         }
 
         public List<Card> getCards()
         {
             return cards;
+        }
+
+        public void setHandBust(Boolean isBust)
+        {
+            this.isBust = isBust;
+        }
+
+        public Boolean getHandBust()
+        {
+            return isBust;
         }
 
         public int getCurrentHandValue()

@@ -8,17 +8,18 @@ namespace GameCardLib
 {
     public class Player
     {
-        private Hand hand;
+        public Hand hand;
         public event EventHandler<PlayerEvent> playerHit;
         public event EventHandler<PlayerEvent> playerStand;
+        public event EventHandler<PlayerEvent> playerBust;
 
         public int playerId
-        { get; }
+        { get; set;  }
         public Boolean isFinished
         { get; set; }
-        private Boolean winner 
+        public Boolean winner 
         { get; set; }
-        private string playerName
+        public string playerName
         { get; set; }
 
         public Player(string playername, int playerId) {
@@ -33,21 +34,32 @@ namespace GameCardLib
         public void hit(Card card) //Player wants to hit. 
         {
             hand.addCard(card);
-            if(hand.getCurrentHandValue() > 21 )
-            {
-                this.isFinished = true;
-            }
-            PlayerEvent action = new PlayerEvent(true);
+            PlayerEvent action = new PlayerEvent(true, false);
             OnPlayerHit(action);
         }
 
         //Player wants to stand. 
         public void stand()
         {
-            PlayerEvent action = new PlayerEvent(false);
+            this.isFinished = true;
+            PlayerEvent action = new PlayerEvent(false, false);
             OnPlayerStand(action);
         }
 
+        public void bust()
+        {
+            this.isFinished = true;
+            PlayerEvent action = new PlayerEvent(false, true);
+            OnPlayerBust(action);
+        }
+
+        private void OnPlayerBust(PlayerEvent e)
+        {
+            if(playerBust != null)
+            {
+                playerBust(this, e);
+            }
+        }
 
         //Raise event
         private void OnPlayerStand(PlayerEvent e)

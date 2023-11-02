@@ -10,10 +10,12 @@ namespace GameCardLib
     {
 
         private Boolean wantsHit; // If the player wants to hit or stand. 
+        private Boolean isBust;
 
-        public PlayerEvent(Boolean wantsHit) 
+        public PlayerEvent(Boolean wantsHit, Boolean isBust) 
         {
             this.wantsHit = wantsHit;
+            this.isBust = IsBust;
         }
 
         //Getters and setters.
@@ -22,6 +24,12 @@ namespace GameCardLib
         {
             get { return wantsHit; }
             set { wantsHit = value; }
+        }
+
+        public Boolean IsBust
+        {
+            get { return isBust; }
+            set { isBust = value; }
         }
     }
 }
