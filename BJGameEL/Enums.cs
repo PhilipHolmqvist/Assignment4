@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GameCardLib
+namespace BJGameEL
 {
     public class Enums //This class contains the Enums for the card suits and values. 
     {

@@ -1,12 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net.Security;
-using System.Text;
-using System.Threading.Tasks;
-using static GameCardLib.Enums;
+﻿
+using static BJGameEL.Enums;
 
-namespace GameCardLib
+namespace BJGameEL
 {
     public class Card
     {

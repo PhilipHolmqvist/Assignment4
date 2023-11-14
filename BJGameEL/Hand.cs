@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Threading.Tasks.Sources;
 
-namespace GameCardLib
+namespace BJGameEL
 {
     public class Hand
     {

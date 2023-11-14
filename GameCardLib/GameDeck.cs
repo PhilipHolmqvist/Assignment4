@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿
+using BJGameEL;
 using UtilitiesLib;
 
-namespace GameCardLib
+namespace BJGameBBL
 {
 
     //The gamedeck class contains a set amount of card decks.

@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿
+using BJGameEL;
 using UtilitiesLib;
 
-namespace GameCardLib
+namespace BJGameBBL
 {
 
     //This class contains a full set of cards and has methods to allow manipulation of the deck.
