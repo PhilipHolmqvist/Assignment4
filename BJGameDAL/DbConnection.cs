@@ -11,6 +11,17 @@ namespace BJGameDAL
      */
     public class DbConnection : DbContext
     {
-        DbSet<Player> Players {  get; set; }
+        //It should be possible to add, change and delete an item in the database. 
+
+        //Variablerna representerar tabeller i databasen.
+        public DbSet<Player> Players {  get; set; }
+
+      
+
+
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            optionsBuilder.UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=GameDb"); 
+        }
     }
 }

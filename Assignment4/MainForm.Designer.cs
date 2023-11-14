@@ -36,6 +36,7 @@
             playerHitButton = new Button();
             playerStandButton = new Button();
             groupBox2 = new GroupBox();
+            clearHandsButton = new Button();
             removePlayerButton = new Button();
             nextRoundButton = new Button();
             pictureBox1 = new PictureBox();
@@ -55,7 +56,7 @@
             scoreLabel5 = new Label();
             scoreLabel6 = new Label();
             scoreLabel7 = new Label();
-            clearHandsButton = new Button();
+            historyButton = new Button();
             groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             SuspendLayout();
@@ -93,10 +94,10 @@
             // 
             // addNewPlayerButton
             // 
-            addNewPlayerButton.Location = new Point(42, 57);
+            addNewPlayerButton.Location = new Point(24, 32);
             addNewPlayerButton.Margin = new Padding(3, 4, 3, 4);
             addNewPlayerButton.Name = "addNewPlayerButton";
-            addNewPlayerButton.Size = new Size(138, 51);
+            addNewPlayerButton.Size = new Size(123, 51);
             addNewPlayerButton.TabIndex = 11;
             addNewPlayerButton.Text = "Add player";
             addNewPlayerButton.UseVisualStyleBackColor = true;
@@ -104,7 +105,7 @@
             // 
             // playerHitButton
             // 
-            playerHitButton.Location = new Point(42, 212);
+            playerHitButton.Location = new Point(24, 155);
             playerHitButton.Margin = new Padding(3, 4, 3, 4);
             playerHitButton.Name = "playerHitButton";
             playerHitButton.Size = new Size(138, 51);
@@ -115,7 +116,7 @@
             // 
             // playerStandButton
             // 
-            playerStandButton.Location = new Point(42, 289);
+            playerStandButton.Location = new Point(24, 237);
             playerStandButton.Margin = new Padding(3, 4, 3, 4);
             playerStandButton.Name = "playerStandButton";
             playerStandButton.Size = new Size(138, 51);
@@ -126,6 +127,7 @@
             // 
             // groupBox2
             // 
+            groupBox2.Controls.Add(historyButton);
             groupBox2.Controls.Add(clearHandsButton);
             groupBox2.Controls.Add(removePlayerButton);
             groupBox2.Controls.Add(nextRoundButton);
@@ -136,17 +138,27 @@
             groupBox2.Margin = new Padding(3, 4, 3, 4);
             groupBox2.Name = "groupBox2";
             groupBox2.Padding = new Padding(3, 4, 3, 4);
-            groupBox2.Size = new Size(229, 519);
+            groupBox2.Size = new Size(453, 519);
             groupBox2.TabIndex = 19;
             groupBox2.TabStop = false;
             groupBox2.Text = "Player Actions";
             // 
+            // clearHandsButton
+            // 
+            clearHandsButton.Location = new Point(24, 439);
+            clearHandsButton.Name = "clearHandsButton";
+            clearHandsButton.Size = new Size(137, 48);
+            clearHandsButton.TabIndex = 16;
+            clearHandsButton.Text = "Clear Hands";
+            clearHandsButton.UseVisualStyleBackColor = true;
+            clearHandsButton.Click += clearHandsButton_Click;
+            // 
             // removePlayerButton
             // 
-            removePlayerButton.Location = new Point(43, 135);
+            removePlayerButton.Location = new Point(164, 32);
             removePlayerButton.Margin = new Padding(3, 4, 3, 4);
             removePlayerButton.Name = "removePlayerButton";
-            removePlayerButton.Size = new Size(138, 51);
+            removePlayerButton.Size = new Size(123, 51);
             removePlayerButton.TabIndex = 15;
             removePlayerButton.Text = "Remove Player";
             removePlayerButton.UseVisualStyleBackColor = true;
@@ -154,7 +166,7 @@
             // 
             // nextRoundButton
             // 
-            nextRoundButton.Location = new Point(43, 367);
+            nextRoundButton.Location = new Point(24, 359);
             nextRoundButton.Margin = new Padding(3, 4, 3, 4);
             nextRoundButton.Name = "nextRoundButton";
             nextRoundButton.Size = new Size(137, 51);
@@ -333,15 +345,15 @@
             scoreLabel7.TabIndex = 36;
             scoreLabel7.Text = "Score7";
             // 
-            // clearHandsButton
+            // historyButton
             // 
-            clearHandsButton.Location = new Point(42, 439);
-            clearHandsButton.Name = "clearHandsButton";
-            clearHandsButton.Size = new Size(137, 48);
-            clearHandsButton.TabIndex = 16;
-            clearHandsButton.Text = "Clear Hands";
-            clearHandsButton.UseVisualStyleBackColor = true;
-            clearHandsButton.Click += clearHandsButton_Click;
+            historyButton.Location = new Point(307, 32);
+            historyButton.Name = "historyButton";
+            historyButton.Size = new Size(123, 51);
+            historyButton.TabIndex = 37;
+            historyButton.Text = "History";
+            historyButton.UseVisualStyleBackColor = true;
+            historyButton.Click += historyButton_Click;
             // 
             // MainForm
             // 
@@ -409,5 +421,6 @@
         private Label scoreLabel6;
         private Label scoreLabel7;
         private Button clearHandsButton;
+        private Button historyButton;
     }
 }

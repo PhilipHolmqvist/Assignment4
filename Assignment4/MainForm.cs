@@ -1,5 +1,7 @@
+using BJGameApp;
 using BJGameBBL;
 using BJGameEL;
+using System.Windows.Forms;
 using UtilitiesLib;
 using static BJGameEL.Enums;
 
@@ -82,7 +84,8 @@ namespace Assignment4
                 }
 
                 setScoreLabel(playerId, score);
-                if(score > 21) {
+                if (score > 21)
+                {
                     MessageBox.Show("Player bust with score: " + score, "BUST!", MessageBoxButtons.OK);
                 }
 
@@ -176,7 +179,7 @@ namespace Assignment4
             clearHandsButton.Enabled = true;
 
             List<Player> playerList = gameHandler.whoIsWinner();
-            if(playerList.Count > 0 )
+            if (playerList.Count > 0)
             {
                 String displayString = "Winners are:";
 
@@ -191,9 +194,9 @@ namespace Assignment4
             {
                 MessageBox.Show("No winners!", "Loser!", MessageBoxButtons.OK);
             }
-           
 
-            
+
+
         }
 
         private void playRound()
@@ -344,7 +347,7 @@ namespace Assignment4
                 {
                     nextPlayer();
                 }
-               
+
             }
         }
 
@@ -406,7 +409,7 @@ namespace Assignment4
 
         private void clearHandsButton_Click(object sender, EventArgs e)
         {
-           
+
             //remove cards.
             dealerScoreLabel.Text = "Dealer Score: ";
             scoreLabel1.Text = "Score1";
@@ -417,9 +420,9 @@ namespace Assignment4
             scoreLabel6.Text = "Score6";
             scoreLabel7.Text = "Score7";
 
-            
 
-            foreach(PictureBox pictureBox in pictureBoxes)
+
+            foreach (PictureBox pictureBox in pictureBoxes)
             {
                 this.Controls.Remove(pictureBox);
             }
@@ -447,6 +450,15 @@ namespace Assignment4
 
 
 
+        }
+
+        private void historyButton_Click(object sender, EventArgs e)
+        {
+            List<String> history = gameHandler.getPlayerHistory();
+            HistoryForm historyForm = new HistoryForm(history);
+            historyForm.Location = this.Location;
+            historyForm.StartPosition = FormStartPosition.Manual;
+            historyForm.Show();
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -9,9 +10,9 @@ namespace BJGameEL
 {
     public class Hand
     {
-        private List<Card> cards;
-        private int score;
-        private Boolean isBust;
+        public List<Card> cards;
+        public int score;
+        public Boolean isBust;
 
         public Hand()
         {

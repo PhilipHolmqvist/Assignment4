@@ -1,4 +1,6 @@
 ﻿using BJGameEL;
+using Microsoft.Extensions.Options;
+using BJGameDAL;
 using UtilitiesLib;
 
 namespace BJGameBBL
@@ -14,6 +16,45 @@ namespace BJGameBBL
 
         public GameHandler() {
             int publishers = 0;
+        }
+
+
+        //Saving to db
+        public void savePlayersToDatabase()
+        {
+            using DbConnection context = new DbConnection();
+          
+            int count = players.Count();
+
+            for(int i = 0; i < count; i++)
+            {
+                Player p = players.GetAt(i);
+                context.Players.Add(p);
+            }
+            context.SaveChanges();
+        }
+
+        //Getting from DB
+        public List<String> getPlayerHistory()
+        {
+            List<String> history = new List<String>();
+
+            using DbConnection context = new DbConnection();
+
+            var players = (from player in context.Players
+                           select new
+                           {
+                               Name = player.playerName,
+                               Score = player.hand.score,
+                               Winner = player.winner
+                           }).ToList();
+
+            foreach (var player in players)
+            {
+                history.Add("Name: " + player.Name + " score: " + player.Score + " winner: " + player.Winner);
+            }
+
+            return null;
         }
 
 
