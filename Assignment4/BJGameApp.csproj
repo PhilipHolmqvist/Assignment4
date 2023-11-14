@@ -9,7 +9,13 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\GameCardLib\GameCardLib.csproj" />
+    <PackageReference Include="Elsa.Persistence.EntityFramework.SqlServer" Version="2.13.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="7.0.13" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\BJGameEL\BJGameEL.csproj" />
+    <ProjectReference Include="..\GameCardLib\BJGameBBL.csproj" />
   </ItemGroup>
 
   <ItemGroup>

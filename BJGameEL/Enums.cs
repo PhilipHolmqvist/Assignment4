@@ -6,14 +6,8 @@ using System.Threading.Tasks;
 
 namespace GameCardLib
 {
-    public class Enums
+    public class Enums //This class contains the Enums for the card suits and values. 
     {
-
-        public enum Actions
-        {
-            hit,
-            stand
-        }
 
         public enum Suits
         {

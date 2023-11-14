@@ -147,7 +147,7 @@ namespace GameCardLib
         {
             
             Player player = new Player(playerName, playerId);
-         
+            
             player.playerHit += OnPlayerHit;
             player.playerStand += OnPlayerStand;
             player.playerBust += OnPlayerBust;
