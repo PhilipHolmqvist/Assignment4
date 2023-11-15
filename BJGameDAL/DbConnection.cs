@@ -1,5 +1,6 @@
 ﻿using BJGameEL;
 using Microsoft.EntityFrameworkCore;
+using System.Reflection.Metadata;
 
 namespace BJGameDAL
 {
@@ -15,9 +16,17 @@ namespace BJGameDAL
 
         //Variablerna representerar tabeller i databasen.
         public DbSet<Player> Players {  get; set; }
+        public DbSet<Hand> Hands { get; set; }
 
-      
 
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Player>()
+                .HasOne(e => e.hand)
+                .WithOne()
+                .HasForeignKey<Hand>(e => e.id)
+                .IsRequired();
+        }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {

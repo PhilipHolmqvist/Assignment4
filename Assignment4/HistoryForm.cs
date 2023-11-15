@@ -16,22 +16,25 @@ namespace BJGameApp
     public partial class HistoryForm : Form
     {
         
-        public HistoryForm(List<String> playerHistory)
+        public HistoryForm(List<Player> playerHistory)
         {
-            //Test med data grid view
-            List<Player> history = new List<Player>();
-            Player p = new Player("Holmen", 1);
-            p.winner = true;
-            p.hand.score = 21;
-            history.Add(p);
             
             InitializeComponent();
-            dataGridView1.DataSource = history;
-        }
 
-        private void backButton_Click(object sender, EventArgs e)
-        {
+            //Lägger till rätt columner i datagridview
+            dataGridView1.Columns.Add("playerId", "ID");
+            dataGridView1.Columns.Add("playerName", "Name");
+            dataGridView1.Columns.Add("playerWinner", "Winner");
+            dataGridView1.Columns.Add("playerScore", "Score");
 
+            //Populera datagridview med information från history.
+            foreach (Player player in playerHistory)
+            {
+                dataGridView1.Rows.Add(player.id, player.playerName, player.winner, 12);
+            }
+
+           
+            
         }
     }
 }

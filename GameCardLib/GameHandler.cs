@@ -20,7 +20,7 @@ namespace BJGameBBL
 
 
         //Saving to db
-        public void savePlayersToDatabase()
+        public int savePlayersToDatabase()
         {
             using DbConnection context = new DbConnection();
           
@@ -31,30 +31,25 @@ namespace BJGameBBL
                 Player p = players.GetAt(i);
                 context.Players.Add(p);
             }
-            context.SaveChanges();
+            int writtenStates = context.SaveChanges();
+            return writtenStates;
         }
 
         //Getting from DB
-        public List<String> getPlayerHistory()
+        public List<Player> getPlayerHistory()
         {
-            List<String> history = new List<String>();
+            List<Player> history = new List<Player>();
 
             using DbConnection context = new DbConnection();
 
-            var players = (from player in context.Players
-                           select new
-                           {
-                               Name = player.playerName,
-                               Score = player.hand.score,
-                               Winner = player.winner
-                           }).ToList();
+            var players = context.Players;
 
             foreach (var player in players)
             {
-                history.Add("Name: " + player.Name + " score: " + player.Score + " winner: " + player.Winner);
+                history.Add(player);
             }
 
-            return null;
+            return history;
         }
 
 

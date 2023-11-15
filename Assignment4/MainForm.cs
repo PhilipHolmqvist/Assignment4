@@ -196,7 +196,8 @@ namespace Assignment4
             }
 
 
-
+            int saved = gameHandler.savePlayersToDatabase();
+            MessageBox.Show("Saved entities: " + saved, "Saved", MessageBoxButtons.OK);
         }
 
         private void playRound()
@@ -454,7 +455,7 @@ namespace Assignment4
 
         private void historyButton_Click(object sender, EventArgs e)
         {
-            List<String> history = gameHandler.getPlayerHistory();
+            List<Player> history = gameHandler.getPlayerHistory();
             HistoryForm historyForm = new HistoryForm(history);
             historyForm.Location = this.Location;
             historyForm.StartPosition = FormStartPosition.Manual;

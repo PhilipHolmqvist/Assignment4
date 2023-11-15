@@ -10,7 +10,10 @@ namespace BJGameEL
 {
     public class Hand
     {
+        [Key]
+        public int id { get; set; } //This is the ID for identifying the hand in the database.
         public List<Card> cards;
+        [Required]
         public int score;
         public Boolean isBust;
 

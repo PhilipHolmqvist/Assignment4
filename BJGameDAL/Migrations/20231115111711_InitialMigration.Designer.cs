@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BJGameDAL.Migrations
 {
     [DbContext(typeof(DbConnection))]
-    [Migration("20231114130355_InitialMigration")]
+    [Migration("20231115111711_InitialMigration")]
     partial class InitialMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -22,6 +22,16 @@ namespace BJGameDAL.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
+
+            modelBuilder.Entity("BJGameEL.Hand", b =>
+                {
+                    b.Property<int>("id")
+                        .HasColumnType("int");
+
+                    b.HasKey("id");
+
+                    b.ToTable("Hands");
+                });
 
             modelBuilder.Entity("BJGameEL.Player", b =>
                 {
@@ -47,6 +57,20 @@ namespace BJGameDAL.Migrations
                     b.HasKey("id");
 
                     b.ToTable("Players");
+                });
+
+            modelBuilder.Entity("BJGameEL.Hand", b =>
+                {
+                    b.HasOne("BJGameEL.Player", null)
+                        .WithOne("hand")
+                        .HasForeignKey("BJGameEL.Hand", "id")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("BJGameEL.Player", b =>
+                {
+                    b.Navigation("hand");
                 });
 #pragma warning restore 612, 618
         }

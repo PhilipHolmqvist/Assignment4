@@ -23,10 +23,30 @@ namespace BJGameDAL.Migrations
                 {
                     table.PrimaryKey("PK_Players", x => x.id);
                 });
+
+            migrationBuilder.CreateTable(
+                name: "Hands",
+                columns: table => new
+                {
+                    id = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Hands", x => x.id);
+                    table.ForeignKey(
+                        name: "FK_Hands_Players_id",
+                        column: x => x.id,
+                        principalTable: "Players",
+                        principalColumn: "id",
+                        onDelete: ReferentialAction.Cascade);
+                });
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropTable(
+                name: "Hands");
+
             migrationBuilder.DropTable(
                 name: "Players");
         }

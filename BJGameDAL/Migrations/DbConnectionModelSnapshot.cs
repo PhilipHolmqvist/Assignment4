@@ -21,6 +21,16 @@ namespace BJGameDAL.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
 
+            modelBuilder.Entity("BJGameEL.Hand", b =>
+                {
+                    b.Property<int>("id")
+                        .HasColumnType("int");
+
+                    b.HasKey("id");
+
+                    b.ToTable("Hands");
+                });
+
             modelBuilder.Entity("BJGameEL.Player", b =>
                 {
                     b.Property<int>("id")
@@ -45,6 +55,20 @@ namespace BJGameDAL.Migrations
                     b.HasKey("id");
 
                     b.ToTable("Players");
+                });
+
+            modelBuilder.Entity("BJGameEL.Hand", b =>
+                {
+                    b.HasOne("BJGameEL.Player", null)
+                        .WithOne("hand")
+                        .HasForeignKey("BJGameEL.Hand", "id")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("BJGameEL.Player", b =>
+                {
+                    b.Navigation("hand");
                 });
 #pragma warning restore 612, 618
         }
