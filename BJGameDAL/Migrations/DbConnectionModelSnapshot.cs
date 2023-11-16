@@ -26,6 +26,12 @@ namespace BJGameDAL.Migrations
                     b.Property<int>("id")
                         .HasColumnType("int");
 
+                    b.Property<bool>("isBust")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("score")
+                        .HasColumnType("int");
+
                     b.HasKey("id");
 
                     b.ToTable("Hands");

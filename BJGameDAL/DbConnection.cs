@@ -22,15 +22,17 @@ namespace BJGameDAL
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Player>()
-                .HasOne(e => e.hand)
+                .HasOne(p => p.hand)
                 .WithOne()
-                .HasForeignKey<Hand>(e => e.id)
-                .IsRequired();
+                .HasForeignKey<Hand>(h => h.id)
+                .IsRequired(); // Optional: You can customize other aspects of the relationship
+
+            base.OnModelCreating(modelBuilder);
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=GameDb"); 
+            optionsBuilder.UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=BJGameDb4"); 
         }
     }
 }

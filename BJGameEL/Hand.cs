@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -12,10 +13,11 @@ namespace BJGameEL
     {
         [Key]
         public int id { get; set; } //This is the ID for identifying the hand in the database.
-        public List<Card> cards;
-        [Required]
-        public int score;
-        public Boolean isBust;
+
+        [NotMapped]
+        public List<Card> cards { get; set; } //We dont want to save the cards to the database.
+        public int score { get; set; }
+        public Boolean isBust { get; set; }
 
         public Hand()
         {
@@ -39,18 +41,6 @@ namespace BJGameEL
             return isBust;
         }
 
-        public int getCurrentHandValue()
-        {
-            int result = 0;
-
-            foreach(Card card in cards)
-            {
-                result += card.getCardIntValue();
-            }
-
-            return result;
-        }
-
         public int nbrOfCards()
         {
             return cards.Count;
@@ -59,6 +49,7 @@ namespace BJGameEL
         public Boolean addCard(Card card)
         {
             cards.Add(card);
+            this.score += card.getCardIntValue();
             return true;
         }
 
@@ -71,6 +62,13 @@ namespace BJGameEL
 
         public int getScore()
         {
+            int score = 0;
+
+            foreach(Card card in cards)
+            {
+                score += card.getCardIntValue();
+            }
+
             return score;
         }
     }

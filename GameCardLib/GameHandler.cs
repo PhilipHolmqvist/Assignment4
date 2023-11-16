@@ -18,6 +18,25 @@ namespace BJGameBBL
             int publishers = 0;
         }
 
+        //Delete entry from database
+        public void deleteEntryFromDatabase(int id)
+        {
+            using DbConnection context = new DbConnection();
+            var playerToRemove = context.Players.Find(id); // Replace with the actual PlayerId
+            if (playerToRemove != null)
+            {
+                // Remove the associated Hand entity
+                var handToRemove = playerToRemove.hand;
+                if (handToRemove != null)
+                {
+                    context.Hands.Remove(handToRemove);
+                }
+
+                context.Players.Remove(playerToRemove);
+                context.SaveChanges();
+            }
+
+        }
 
         //Saving to db
         public int savePlayersToDatabase()
@@ -26,12 +45,15 @@ namespace BJGameBBL
           
             int count = players.Count();
 
+
             for(int i = 0; i < count; i++)
             {
                 Player p = players.GetAt(i);
                 context.Players.Add(p);
+                context.Hands.Add(p.getHand());
             }
             int writtenStates = context.SaveChanges();
+
             return writtenStates;
         }
 
@@ -40,12 +62,22 @@ namespace BJGameBBL
         {
             List<Player> history = new List<Player>();
 
-            using DbConnection context = new DbConnection();
+            using DbConnection handContext = new DbConnection();
 
-            var players = context.Players;
+            var hands = handContext.Hands;
+
+            using DbConnection playerContext = new DbConnection();
+            var players = playerContext.Players;
 
             foreach (var player in players)
             {
+                foreach(var hand in hands)
+                {
+                    if(player.id == hand.id)
+                    {
+                        player.hand = hand;
+                    }
+                }
                 history.Add(player);
             }
 
@@ -86,8 +118,8 @@ namespace BJGameBBL
             {
                 if(player.playerId != 0)
                 {
-                    int score = player.getHand().getCurrentHandValue();
-                    if (score >= dealer.getHand().getCurrentHandValue() && score <= 21 ||  dealer.getHand().getCurrentHandValue() > 21 && score <= 21)
+                    int score = player.getHand().getScore();
+                    if (score >= dealer.getHand().getScore() && score <= 21 ||  dealer.getHand().getScore() > 21 && score <= 21)
                     {
                         player.winner = true;
                         winners.Add(player);
@@ -102,7 +134,7 @@ namespace BJGameBBL
         public Player dealerPlay()
         {
 
-            while (dealer.getHand().getCurrentHandValue() <= 16)
+            while (dealer.getHand().getScore() <= 16)
             {
                 playerHit(0);
             }
@@ -156,7 +188,7 @@ namespace BJGameBBL
         {
             if(getPlayer(playerId) != null)
             {
-                if(getPlayer(playerId).getHand().getCurrentHandValue() > 21) {
+                if(getPlayer(playerId).getHand().getScore() > 21) {
                     getPlayer(playerId).bust();
                     
                 }

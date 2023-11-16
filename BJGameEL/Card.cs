@@ -1,12 +1,17 @@
 ﻿
+using System.ComponentModel.DataAnnotations;
 using static BJGameEL.Enums;
 
 namespace BJGameEL
 {
     public class Card
     {
-        private Suits suit;
-        private Values value;
+        [Key]
+        public int Id { get; set; }
+        public Suits suit;
+        public Values value;
+        
+        public Card() { }
 
         public Card(Suits suit, Values value) {
             this.suit = suit;

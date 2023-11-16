@@ -28,7 +28,9 @@ namespace BJGameDAL.Migrations
                 name: "Hands",
                 columns: table => new
                 {
-                    id = table.Column<int>(type: "int", nullable: false)
+                    id = table.Column<int>(type: "int", nullable: false),
+                    score = table.Column<int>(type: "int", nullable: false),
+                    isBust = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {

@@ -456,7 +456,7 @@ namespace Assignment4
         private void historyButton_Click(object sender, EventArgs e)
         {
             List<Player> history = gameHandler.getPlayerHistory();
-            HistoryForm historyForm = new HistoryForm(history);
+            HistoryForm historyForm = new HistoryForm(gameHandler, history);
             historyForm.Location = this.Location;
             historyForm.StartPosition = FormStartPosition.Manual;
             historyForm.Show();

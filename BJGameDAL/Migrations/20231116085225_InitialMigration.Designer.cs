@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BJGameDAL.Migrations
 {
     [DbContext(typeof(DbConnection))]
-    [Migration("20231115111711_InitialMigration")]
+    [Migration("20231116085225_InitialMigration")]
     partial class InitialMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -26,6 +26,12 @@ namespace BJGameDAL.Migrations
             modelBuilder.Entity("BJGameEL.Hand", b =>
                 {
                     b.Property<int>("id")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("isBust")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("score")
                         .HasColumnType("int");
 
                     b.HasKey("id");
